@@ -15,26 +15,20 @@ ENV PATH="/usr/lib/anaconda2/bin:$PATH"
 ENV SPARK_HOME="/usr/lib/spark"
 ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH"
 
-##
-# PORT MAPPINGS
-##
+
+LABEL dockerdash.dashname="roots_derriere" \
+          dockerdash.category1="jupyter" \
+              dockerdash.category1.e1.name="notebook" \
+              dockerdash.category1.e1.port="6666" \
+              dockerdash.category1.e1.attribute="web" \
+          dockerdash.category2="HDFS" \
+              dockerdash.category2.e1.name="NameNode" \
+              dockerdash.category2.e1.port="8020"
 
 
 
-##
-# @dockerdash:start
-# @cluster-name:roots_derriere
-##
 
-  ##
-  # @new-category:jupyter
-  ##
-
-    # @name:notebook
-    # @attribute:web
-    EXPOSE 6666
-
-
+EXPOSE 6666
   ##
   # @new-category:HDFS
   ##
