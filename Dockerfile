@@ -30,7 +30,7 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
   ##
 
     # @name:notebook
-    # @web
+    # @attribute:web
     EXPOSE 6666
 
 
@@ -42,11 +42,11 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
     EXPOSE 8020
 
     # @name=NameNode HTTPS UI
-    # @web
+    # @attribute:web
     EXPOSE 50470
 
     # @name=DataNode UI
-    # @web
+    # @attribute:web
     EXPOSE 50075
 
 
@@ -55,11 +55,11 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
   ##
 
     # @name:RESOURCE Manager UI
-    # @web
+    # @attribute:web
     EXPOSE 8088
 
     # @name:NodeManager UI
-    # @web
+    # @attribute:web
     EXPOSE 8042
 
     # @name:NodeManager localizer
@@ -71,7 +71,7 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
   ##
 
     # @name:MapReduce JobHistory UI
-    # @web
+    # @attribute:web
     EXPOSE 19888
 
 
@@ -80,7 +80,7 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
   ##
 
     # @name:Local Client Driver HTTP UI
-    # @web
+    # @attribute:web
     EXPOSE 4040
 
 
