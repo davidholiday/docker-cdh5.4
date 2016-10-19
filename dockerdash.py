@@ -58,9 +58,8 @@ def setup_logging():
 
 def get_parser():
     parser = argparse.ArgumentParser(description="creates a dashboard that lists port resolutions for a given docker container.")
-    parser.add_argument("-p", "--%s" % (DOCKERFILE_PATH_ARG,), help="path to the docker file (if not in same directory as dockerdash.py")
-    parser.add_argument("-n", "--%s" % (DASH_NAME_ARG,), help="the display name for this dashboard instance.")
-    parser.add_argument(CONTAINER_NAME_ARG, help="the name of the container you wish to create a dock for.")
+    parser.add_argument("-d", "--%s" % (DASH_NAME_ARG,), help="the display name for this dashboard instance.")
+    parser.add_argument("-c", "--%s" % (CONTAINER_NAME_ARG,), help="the name of the container you wish to create a dock for.")
     return parser
 
 
@@ -71,21 +70,19 @@ def parse_args(parser):
         raise ValueError("this method only accepts instances of argparse.ArgumentParser!")
 
     args = parser.parse_args()
+    argsDict = vars(args)
 
-    _containerName = vars(args).get(CONTAINER_NAME_ARG)
-    if (vars(args).get(DASH_NAME_ARG)):
-        _dashName = "%s@%s" % (vars(args).get(DASH_NAME_ARG), _containerName)
+    if (argsDict.get(CONTAINER_NAME_ARG)):
+        _containerName = argsDict.get(CONTAINER_NAME_ARG);
+    else:
+        _containerName = ""
+
+    if (argsDict.get(DASH_NAME_ARG)):
+        _dashName = "%s@%s" % (argsDict.get(DASH_NAME_ARG), _containerName)
     else:
         _dashName = "%s@%s" % (DEFAULT_DASH_NAME_PREFIX, _containerName)
 
-    if (vars(args).get(DOCKERFILE_PATH_ARG)):
-        fqname = os.path.join(vars(args).get(DOCKERFILE_PATH_ARG), DOCKERFILE_NAME)
-        dockerFile = open(fqname, 'r')
-    else:
-        dockerFile = open(DOCKERFILE_NAME, 'r')
-
     print(_dashName)
-    print(dockerFile.read())
 
 
 def arg_check(arg, clazz):
