@@ -23,7 +23,7 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
 
 ##
 # @dockerdash:start
-# @dash-name:roots_derriere
+# @cluster-name:roots_derriere
 ##
 
   ##
