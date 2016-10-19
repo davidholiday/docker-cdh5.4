@@ -23,6 +23,8 @@ ENV PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPAR
 
 ##
 # @dockerdash:start
+# @docker-image-name:docker-cdh54
+# @dash-name:roots_derriere
 ##
 
   ##
