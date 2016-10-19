@@ -2,8 +2,9 @@
 
 import logging
 import argparse
-
 import os
+import json
+
 import subprocess
 
 
@@ -30,8 +31,10 @@ def testme():
 
 def main():
     setup_logging()
+
     parser = get_parser()
     parse_args(parser)
+
 
 
     # parse the dash name and filter values
