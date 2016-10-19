@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import logging
 import os
 import subprocess
 
@@ -9,6 +10,9 @@ import subprocess
 # !! arg that tells dockerdash to open a particular dash instance
 
 def main():
+    setup_logging()
+    logging.info("foo")
+
     # parse the dash name and filter values
 
     # parse the output from docker ps
@@ -20,6 +24,9 @@ def main():
     # open default browser instance with dash instance
 
 
+def setup_logging():
+    logging.basicConfig(level=logging.INFO,
+                        format="%(asctime)s - [%(levelname)s] [%(threadName)s] (%(module)s:%(lineno)d) %(message)s", )
 
 
 if __name__ == "__main__": main()
