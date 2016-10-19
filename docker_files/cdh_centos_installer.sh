@@ -75,6 +75,43 @@ echo "Install Cloudera Components"
 #Satish: Added zookeeper
 yum install -y zookeeper zookeeper-server hive hbase hbase-thrift hbase-master pig oozie oozie-client spark-core spark-master spark-worker spark-history-server spark-python hue hue-server
 
+
+# from https://www.digitalocean.com/community/tutorials/how-to-set-up-python-2-7-6-and-3-3-3-on-centos-6-4
+# for setting up python 2.7, pip, and virtual env so we can install conda
+#
+echo "Installing python2.7, pip, and virtualenv"
+export $WORK_DIR="/usr/lib/"
+yum groupinstall -y development
+yum install -y zlib-dev openssl-devel sqlite-devel bzip2-devel xz-libs
+
+cd $WORK_DIR 
+wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz
+xz -d Python-2.7.12.tar.xz 
+tar -xvf Python-2.7.12.tar
+cd Python-2.7.12
+./configure
+make && make altinstall
+
+cd $WORK_DIR 
+wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-1.4.2.tar.gz
+tar -xvf setuptools-1.4.2.tar.gz
+cd setuptools-1.4.2
+python2.7 setup.py install
+curl https://bootstrap.pypa.io/get-pip.py | python2.7 -
+pip install virtualenv
+
+# setup anaconda
+#
+echo "install and set up anaconda2"
+cd $WORK_DIR
+wget https://repo.continuum.io/archive/Anaconda2-4.2.0-Linux-x86_64.sh
+chmod +x Anaconda2-4.2.0-Linux-x86_64.sh 
+./Anaconda2-4.2.0-Linux-x86_64.sh  -b -p /usr/lib/anaconda2
+export PATH="/usr/lib/anaconda2/bin:$PATH"
+export SPARK_HOME="/usr/lib/spark"
+export PYTHONPATH="$SPARK_HOME/python/lib/py4j-0.9-src.zip:$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH"
+mkdir ~/notebooks
+
 #Initiate Oozie Database
 oozie-setup db create -run
 

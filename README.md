@@ -1,3 +1,4 @@
+*NOT PRODUCTION READY YET-- DO NOT USE*
 Creating docker with all CDH components
 =========================================
 
