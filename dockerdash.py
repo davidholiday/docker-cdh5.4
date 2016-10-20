@@ -30,8 +30,13 @@ def main():
     setup_logging()
     parser = get_parser()
     parsedArgsDict = parse_args(parser)
-    print(get_container_names(parsedArgsDict))
+    containerNames = get_container_names(parsedArgsDict)
+    containerMetadataDict = get_container_metadata_list(containerNames)
 
+    for key, value in containerMetadataDict.iteritems():
+        print(key)
+        parsedJSON = json.loads(value)
+        print(json.dumps(parsedJSON, indent=4, sort_keys=True))
 
 
     # parse the dash name and filter values
@@ -107,6 +112,20 @@ def get_container_names(parsedArgsDict):
         containerNames = containerNames + outputList
 
     return containerNames
+
+
+def get_container_metadata_list(containerNames):
+    """
+
+    """
+    containerDict = dict()
+
+    for containerName in containerNames:
+        output = subprocess.Popen(["docker", "inspect", containerName],stdout=subprocess.PIPE).communicate()[0]
+        containerDict[containerName]= output
+
+    return containerDict
+
 
 
 
