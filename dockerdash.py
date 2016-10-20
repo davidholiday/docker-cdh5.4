@@ -2,11 +2,11 @@
 
 import logging
 import argparse
-import os
 import json
 import getpass
 import subprocess
 import socket
+import dpath.util
 
 # TODO use container name to issue docker inspect command -- results are in json format, no?
 #
@@ -17,26 +17,28 @@ import socket
 # TODO add method to parse dockerfile metadata into json
 
 
-DOCKERFILE_NAME = "Dockerfile"
 DEFAULT_DASH_NAME_PREFIX = "dockerdash for "
-DOCKERFILE_PATH_ARG = "dockerfile_path"
 DASH_NAME_ARG = "dashboard_name"
 CONTAINER_NAME_ARG = "container_name"
 
-def testme():
-    print("foop")
 
 def main():
     setup_logging()
     parser = get_parser()
     parsedArgsDict = parse_args(parser)
     containerNames = get_container_names(parsedArgsDict)
-    containerMetadataDict = get_container_metadata_list(containerNames)
+    containerMetadataDict = get_container_metadata_dict(containerNames)
 
-    for key, value in containerMetadataDict.iteritems():
-        print(key)
-        parsedJSON = json.loads(value)
-        print(json.dumps(parsedJSON, indent=4, sort_keys=True))
+
+    pretty_print_metadata(containerMetadataDict)
+
+
+
+#    for key, value in containerMetadataDict.iteritems():
+#        print(key)
+#        parsedJSON = json.loads(value)
+#        print(json.dumps(parsedJSON, indent=4, sort_keys=True))
+
 
 
     # parse the dash name and filter values
@@ -114,17 +116,41 @@ def get_container_names(parsedArgsDict):
     return containerNames
 
 
-def get_container_metadata_list(containerNames):
+def get_container_metadata_dict(containerNames):
     """
 
     """
     containerDict = dict()
 
     for containerName in containerNames:
-        output = subprocess.Popen(["docker", "inspect", containerName],stdout=subprocess.PIPE).communicate()[0]
+        output = subprocess.Popen(["docker", "inspect", "--format='{{json .Config}}'", containerName],stdout=subprocess.PIPE).communicate()[0]
         containerDict[containerName]= output
 
     return containerDict
+
+
+
+def pretty_print_metadata(containerMetadataDict):
+    for key, value in containerMetadataDict.iteritems():
+        print ("container is: " + key)
+
+        dockerdashDict = dict()
+        valueDict = json.loads(value)
+
+        # first filter by category
+        firstFilterValue = "dockerdash.c."
+        dockerdashLabelDict = { k[ len(firstFilterValue): ]  for k in valueDict['Labels'] if k.startswith(firstFilterValue) }
+
+        # figure out how many categories there are
+
+
+#        for k in dockerdashLabelSet:
+
+
+        print(dockerdashLabelDict)
+
+
+#def how_many_top_elements(dictWithFormattedKeys):
 
 
 
