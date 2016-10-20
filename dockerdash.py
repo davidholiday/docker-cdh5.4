@@ -139,18 +139,35 @@ def pretty_print_metadata(containerMetadataDict):
 
         # first filter by category
         firstFilterValue = "dockerdash.c."
-        dockerdashLabelDict = { k[ len(firstFilterValue): ]  for k in valueDict['Labels'] if k.startswith(firstFilterValue) }
+        dockerdashLabelSet = { k[ len(firstFilterValue): ]  for k in valueDict['Labels'] if k.startswith(firstFilterValue) }
 
         # figure out how many categories there are
+        categoryCount = get_toplevel_highest_index(dockerdashLabelSet)
+
+        # figure out how many elements there are per category
+        categoryElementDict = dict()
+        # TODO this is farty -- consider changing the metadata to start at '0' and not '1'
+        for i in range(1, categoryCount + 1):
+            categoryFilterValue = str(i) + ".e."
+            categoryLabelSubset = { k[ len(categoryFilterValue): ]  for k in dockerdashLabelSet if k.startswith(categoryFilterValue) }
+            elementCount = get_toplevel_highest_index(categoryLabelSubset)
+            categoryElementDict[i] = elementCount
+
+        print("there are %d categories" % (categoryCount))
+        for k, v in categoryElementDict.iteritems():
+            print("category %d has %d elements" % (k, v))
 
 
-#        for k in dockerdashLabelSet:
+def get_toplevel_highest_index(dockerdashLabelSet):
+    """
+    does not return a number, bru
+    """
+    count = 0
+    for k in dockerdashLabelSet:
+        if k.split('.')[0] > count:
+            count = k.split('.')[0]
 
-
-        print(dockerdashLabelDict)
-
-
-#def how_many_top_elements(dictWithFormattedKeys):
+    return int(count)
 
 
 
