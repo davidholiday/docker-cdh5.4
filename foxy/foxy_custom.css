@@ -15,6 +15,12 @@
 }
 
 
+/*
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #2b3e50
+}
+*/
+
 
 .spacer5 { height: 5px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer10 { height: 10px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
