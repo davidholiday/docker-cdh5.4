@@ -15,6 +15,10 @@
 }
 
 
+.page-header {
+	border-bottom-color: #2b3e50;
+}
+
 /*
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #2b3e50
