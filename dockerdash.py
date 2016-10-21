@@ -6,7 +6,7 @@ import json
 import getpass
 import subprocess
 import socket
-import dpath.util
+#import dpath.util
 
 # TODO use container name to issue docker inspect command -- results are in json format, no?
 #
@@ -15,6 +15,18 @@ import dpath.util
 # TODO clean up arg parsing (create constants file and/or pull val(args) into a helper function?)
 #
 # TODO add method to parse dockerfile metadata into json
+
+
+
+# TODO make the web app run from within its own container?
+# TODO alias docker command to docker blah blah ... & dockerdash.py method to detect changes
+# ----- one way to do this might be hashing the results of docker ps
+
+# TODO json -> html table jqGrid??
+# ------ this to facillitate conversion of the docker inspect command into data on the running container
+
+# TODO canary -- tag certain services so that you get an alert when it goes offline
+
 
 
 DEFAULT_DASH_NAME_PREFIX = "dockerdash for "
@@ -130,6 +142,12 @@ def get_container_metadata_dict(containerNames):
 
 
 
+# TODO use exec function to dynamically convert dockerdash metadata into a nested dict
+#
+# 1) arr = k.split('.')
+# 2) for v in arr --> add to dict by creating a string and exec'ing it
+# 3) enumerate through the list of keys and populate the nested dict
+
 def pretty_print_metadata(containerMetadataDict):
     for key, value in containerMetadataDict.iteritems():
         print ("container is: " + key)
@@ -137,6 +155,7 @@ def pretty_print_metadata(containerMetadataDict):
         dockerdashDict = dict()
         valueDict = json.loads(value)
 
+        # TODO: breakout the key pruning into its own function
         # first filter by category
         firstFilterValue = "dockerdash.c."
         dockerdashLabelSet = { k[ len(firstFilterValue): ]  for k in valueDict['Labels'] if k.startswith(firstFilterValue) }
@@ -160,7 +179,6 @@ def pretty_print_metadata(containerMetadataDict):
 
 def get_toplevel_highest_index(dockerdashLabelSet):
     """
-    does not return a number, bru
     """
     count = 0
     for k in dockerdashLabelSet:
