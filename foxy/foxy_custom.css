@@ -27,6 +27,29 @@
 
 
 
+
+.json-view {
+	font-family: "Lucida Console";
+    word-wrap: break-word;
+    color: #00ff00;
+
+}
+
+
+.json-view .bool, .json-view .null, .json-view .num, .json-view .undef {
+    font-weight: 700;
+    color: #ffff00
+}
+
+.json-view .str {
+    color: #00ffff;
+}
+
+
+
+
+
+
 .navbar-center
 {
     position: absolute;
