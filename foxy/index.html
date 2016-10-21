@@ -7,10 +7,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="./bootstrap.min.css">
-        <link href="foxy_custom.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="foxy_custom.css" type="text/css">
+        <link rel="stylesheet" href="jquery.json-view.min.css">
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="./jquery.json-view.min.js"></script>
+
     </head>
 
     <body>
@@ -32,17 +36,29 @@
                 </div>
         
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+                    <!-- search bar -->
+                    <!--
+                    <form class="navbar-form navbar-center" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    -->
+
+                    <!-- right-side buttons -->
                     <ul class="nav navbar-nav navbar-right">
                         
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">containers <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">CONTAINERS <span class="caret"></span></a>
                         
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Action</a></li>
                             </ul>
                         </li>
 
-                        <li><a href="#">help</a></li>
+                        <li><a href="#">HELP</a></li>
                     </ul>
                 </div>
 
@@ -98,7 +114,24 @@
                     </div>
 
                     <div id="info" class="tab-pane fade">
-                        fff
+                        <script>
+                        var json = (function() {
+                            var json = null;
+                            $.ajax({
+                                'async': false,
+                                'global': false,
+                                'url': "./test.json",
+                                'dataType': "json",
+                                'success': function (data) {
+                                json = data;
+                            }
+                        });
+                        return json;
+                        })();
+
+
+                        $('#info').jsonView(json)
+                        </script>
                     </div>
 
                 </div>
