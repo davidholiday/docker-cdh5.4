@@ -1,72 +1,69 @@
 FROM ubuntu
 
-# LABEL dockerdash.dashname="test_dash_1" \
-#      dockerdash.c1="test_category_1" \
-#      dockerdash.c1.name="foo" \
-#      dockerdash.c1.port="22" \
-#      dockerdash.c1.attribute="web" \
-#      dockerdash.c2="test_category_2" \
-#      dockerdash.c2.name="moo" \
-#      dockerdash.c2.port="666"
-
-
-# CREATE DOCKERDASH PORT META DATA & EXPOSE PORTS 
-LABEL dockerdash.dashname="roots_derriere" \
+# CREATE FOXY PORT META DATA & EXPOSE PORTS 
+LABEL \
       #
-          dockerdash.c.0="jupyter" \
-              dockerdash.c.0.e.0="notebook" \
-                  dockerdash.c.0.e.0.port="6666" \
-                  dockerdash.c.0.e.0.attribute="web" \
-                  #
-          dockerdash.c.1="HDFS" \
-              dockerdash.c.1.e.0="NameNode" \
-                  dockerdash.c.1.e.0.port="8020" \
-              dockerdash.c.1.e.1="NameNode HTTPS UI" \
-                  dockerdash.c.1.e.1.port="50470" \
-                  dockerdash.c.1.e.1.attribute="web" \
-              dockerdash.c.1.e.2="DataNode UI" \ 
-                  dockerdash.c.1.e.2.port="50075" \
-                  dockerdash.c.1.e.2.attribute="web" \
-                  #
-          dockerdash.c.2="Yarn" \
-              dockerdash.c.2.e.0="Resource Manager UI" \
-                  dockerdash.c.2.e.0.port="8088" \
-                  dockerdash.c.2.e.0.attribute="web" \
-              dockerdash.c.2.e.1="Node Manager" \
-                  dockerdash.c.2.e.1.port="8042" \
-                  dockerdash.c.2.e.1.attribute="web" \
-              dockerdash.c.2.e.2="Node Manager Localizer" \
-                  dockerdash.c.2.e.2.port="8040" \
-                  #
-          dockerdash.c.3="Spark" \
-              dockerdash.c.3.e.0="Local Client Driver HTTP UI" \
-                  dockerdash.c.3.e.0.port="4040" \
-                  dockerdash.c.3.e.0.attribute="web" \
-                  #
-          dockerdash.c.4="Hadoop" \
-              dockerdash.c.4.e.0="MapReduce JobHistory UI" \
-                  dockerdash.c.4.e.0.port="19888" \
-                  dockerdash.c.4.e.0.attribute="web" \
-                  #
-          dockerdash.c.5="ZooKeeper" \
-              dockerdash.c.5.e.0="ZooKeeper Client" \
-                  dockerdash.c.5.e.0.port="2181" \
-                  #
-          dockerdash.c.6="Hue" \
-              dockerdash.c.6.e.0="Server" \
-                  dockerdash.c.6.e.0.port="8888" \
-                  #
-          dockerdash.c.7="Oozie" \
-              dockerdash.c.7.e.0="Server HTTP interface" \
-                  dockerdash.c.7.e.0.port="11000" \
-                  #
-          dockerdash.c.8="Other" \
-              dockerdash.c.8.e.0="Linux Cockpit (todo)" \
-                  dockerdash.c.8.e.0.port="9090" \
-              dockerdash.c.8.e.1="Dogtag Port" \
-                  dockerdash.c.8.e.1.port="11443" \
-              dockerdash.c.8.e.2="ssh" \ 
-                  dockerdash.c.8.e.2.port="22" 
+      # group jupyter
+          foxy.6666.name="notebook" \
+          foxy.6666.group="jupyter" \
+          foxy.6666.attribute="web" \
+      #
+      # group HDFS
+          foxy.8020.name="NameNode" \
+          foxy.8020.group="HDFS" \
+      
+          foxy.50470.name="NameNode HTTPS UI" \
+          foxy.50470.group="HDFS" \
+          foxy.50470.attribute="web" \
+      
+          foxy.50075.name="DataNode UI" \
+          foxy.50075.group="HDFS" \
+          foxy.50075.attribute="web" \
+      #
+      # group Yarn
+          foxy.8088.name="Resource Manager UI" \
+          foxy.8088.group="Yarn" \
+          foxy.8088.attribute="web" \
+      
+          foxy.8042.name="Node Manager" \
+          foxy.8042.group="Yarn" \
+          foxy.8042.attribute="web" \
+      
+          foxy.8040.name="Node Manager Localizer" \
+          foxy.8040.group="Yarn" \
+      #    
+      # group Spark
+          foxy.4040.name="Local Client Driver HTTP UI" \
+          foxy.4040.group="Spark" \
+          foxy.4040.attribute="web" \
+      #
+      # group Hadoop
+          foxy.19888.name="MapReduce JobHistory UI" \
+          foxy.19888.group="Hadoop" \
+          foxy.19888.attribute="web" \
+      #
+      # group ZooKeeper
+          foxy.2181.name="ZooKeeper Client" \
+          foxy.2181.group="ZooKeeper" \
+          foxy.2181.attribute="web" \
+      #
+      # group Hue
+          foxy.8888.name="Server" \
+          foxy.8888.group="Hue" \
+      #      
+      # group Oozie
+          foxy.11000.name="Server HTTP interface" \
+          foxy.11000.group="Oozie" \
+      #   
+      # group Other
+          foxy.9090.name="Linux Cockpit (todo)" \
+          foxy.9090.group="Other" \
+       
+          foxy.11443.name="Dogtag Port" \
+          foxy.11443.group="Other" \
+       
+          foxy.22.name="ssh" \
+          foxy.22.group="Other" 
 
 
 
