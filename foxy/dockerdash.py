@@ -156,9 +156,12 @@ def get_container_info_dict(containerNames):
 
     """
     containerInfoDict = dict()
-
+###
+### !! TODO !! output only contains one of the categories available -- .Config needs to be a wildcard of some kind!! 
+###
     for containerName in containerNames:
-        output = subprocess.Popen(["docker", "inspect", "--format='{{json .Config}}'", containerName],
+        output = subprocess.Popen(["docker", "inspect", "--format='{{json .}}'", containerName],
+        #output = subprocess.Popen(["docker", "inspect", containerName],    
             stdout=subprocess.PIPE).communicate()[0]
         containerInfoDict[containerName]= output
 
@@ -177,18 +180,26 @@ def get_foxydata_dict(containerInfoDict):
 
         logging.info("container is: %s"  % (key) )
         valueDict = json.loads(value)
-        metaDataDict = valueDict['Labels']
-         
+        #print(type(valueDict))
+        #print(valueDict)
+
+        metaDataDict = valueDict['Config']['Labels']
+        #print(valueDict)
+        portsDict = dict()
+        if valueDict['State']['Running'] == 'true':
+            portsDict = valueDict['NetworkSettings']['Ports']
+            print(portsDict)
+
         # first filter by category
         categoryFilter = constants.TOP_LEVEL_METATDATA_FILTER
         foxyMetaData = filter_by_namespace(metaDataDict, categoryFilter)
         
         # figure out how many categories there are
-        categoryCount = get_index_ceiling(foxyMetaData)
-        logging.info("there are %d categories" % (categoryCount))
+        # categoryCount = get_index_ceiling(foxyMetaData)
+        # logging.info("there are %d categories" % (categoryCount))
 
         # parse the metadata to a dict   
-        foxyDataDict[key] = get_foxydata_and_tables_for_container(categoryCount, foxyMetaData)  
+        foxyDataDict[key] = get_foxydata_for_container(foxyMetaData)  
 
     return foxyDataDict 
 
@@ -206,24 +217,29 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 
-
+"""
 def get_index_ceiling(foxyMetaData):
-    """
-    """
     count = 0
     for k in foxyMetaData:
         if k.split('.')[0] > count:
             count = k.split('.')[0]
     count = int(count)
     return (count + 1) if (len(foxyMetaData) > 0) else (count)
+"""
+
+
+def get_foxydata_for_container(foxyMetaData):
+    print(foxyMetaData)
 
 
 # TODO
 # this method needs to also create the html tables -- no sense in iterating
 # over all the data twice if you don't have to...
+#
+# TODO totally refactor this (and the metadata scheme) order things 
+# protocol first. This way you don't have to n^2 this pig...
+"""
 def get_foxydata_and_tables_for_container(categoryCount, foxyMetaData):
-    """
-    """
     containerFoxyDataDict = dict()
     for i in range(0, categoryCount):
         elementFilter = str(i) + ".e."
@@ -241,7 +257,7 @@ def get_foxydata_and_tables_for_container(categoryCount, foxyMetaData):
         containerFoxyDataDict[categoryName] = elementDict    
 
     return containerFoxyDataDict
-
+"""
 
 
 def arg_check(arg, clazz):
