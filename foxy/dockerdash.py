@@ -174,57 +174,70 @@ def get_container_metadata_dict(containerNames):
 # 3) enumerate through the list of keys and populate the nested dict
 
 def pretty_print_metadata(containerMetadataDict):
+
     for key, value in containerMetadataDict.iteritems():
 
         logging.info("container is: %s"  % (key) )
         valueDict = json.loads(value)
-
+        metaDataDict = valueDict['Labels']
+         
         # first filter by category
         categoryFilter = constants.TOP_LEVEL_METATDATA_FILTER
-        foxyLabelSet = filter_keys_by_value(valueDict, categoryFilter)
-  
+        foxyMetaData = filter_by_namespace(metaDataDict, categoryFilter)
+        
         # figure out how many categories there are
-        categoryCount = get_toplevel_highest_index(foxyLabelSet)
+        categoryCount = get_index_ceiling(foxyMetaData)
         logging.info("there are %d categories" % (categoryCount))
 
-        # figure out how many elements there are per category
+        # parse the metadata to a dict
         categoryElementDict = dict()
 
         for i in range(0, categoryCount):
             elementFilter = str(i) + ".e."
+            elementMetaData = filter_by_namespace(foxyMetaData, elementFilter)
+            elementCount = get_index_ceiling(elementMetaData) 
 
-            elementLabelSubset = { k[ len(elementFilter): ]  \
-                                  for k in foxyLabelSet \
-                                  if k.startswith(elementFilter) }
+            elementDict = dict()
+            for k in range(0, elementCount):
+                elementName = elementMetaData[str(k)]
+                attributeFilter = str(k) + "."
+                elementDict[elementName] = filter_by_namespace(elementMetaData, attributeFilter)
+                
+            categoryName = foxyMetaData[str(i)]
+            logging.info("category %s has %d elements" % (categoryName, elementCount))
+            categoryElementDict[categoryName] = elementDict
+            
+        print(categoryElementDict)
+        
+        
 
-            elementCount = get_toplevel_highest_index(elementLabelSubset) + 1
-            categoryName = foxyLabelSet[str(i)]
-            categoryElementDict[categoryName] = elementCount
-
-        for k, v in categoryElementDict.iteritems():
-            print("category %s has %d elements" % (k, v))
+        
+        logging.info("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n")
 
 
 
-def filter_keys_by_value(valueDict, filterValue):
+
+def filter_by_namespace(valueDict, filterValue):
     """
+    filters foxy metadata by namespace, returns set of <k,v>'s that DO NOT contain the 
+    filtered portion of the namespace. 
     """
     return { k[ len(filterValue): ] : v \
-                for k, v in valueDict['Labels'].iteritems() \
+                for k, v in valueDict.iteritems() \
                     if k.startswith(filterValue) }
 
 
 
 
-def get_toplevel_highest_index(foxyLabelSet):
+def get_index_ceiling(foxyMetaData):
     """
     """
     count = 0
-    for k in foxyLabelSet:
+    for k in foxyMetaData:
         if k.split('.')[0] > count:
             count = k.split('.')[0]
-
-    return int(count)
+    count = int(count)
+    return (count + 1) if (len(foxyMetaData) > 0) else (count)
 
 
 
