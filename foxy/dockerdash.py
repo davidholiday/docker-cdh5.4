@@ -6,6 +6,16 @@ import json
 import getpass
 import subprocess
 import socket
+
+
+import constants
+
+
+# TODO ** start/stop containers from foxy
+#      ** have foxy periodically wake up and check for changes as part of the refresh cycle
+#      ** collapsable panels
+#      ** indicator on container to start/stop
+
 #import dpath.util
 
 # TODO use container name to issue docker inspect command -- results are in json format, no?
@@ -29,9 +39,7 @@ import socket
 
 
 
-DEFAULT_DASH_NAME_PREFIX = "dockerdash for "
-DASH_NAME_ARG = "dashboard_name"
-CONTAINER_NAME_ARG = "container_name"
+
 
 
 def main():
@@ -59,7 +67,8 @@ def main():
 
     # parse the output from docker ps
 
-    # parse and update the template file, including the canary port if listed  (unknown if no canary port is the default)
+    # parse and update the template file, including the canary port if listed  
+    # (unknown if no canary port is the default)
 
     # serialize the template file
 
@@ -70,18 +79,26 @@ def setup_logging():
     """
 
     """
-    logging.basicConfig(level=logging.INFO,
-                        format="%(asctime)s - [%(levelname)s] [%(threadName)s] (%(module)s:%(lineno)d) %(message)s", )
-
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - [%(levelname)s] [%(threadName)s] (%(module)s:%(lineno)d) %(message)s", )
 
 
 def get_parser():
     """
 
     """
-    parser = argparse.ArgumentParser(description="creates a dashboard that lists port resolutions for a given docker container.")
-    parser.add_argument("-d", "--%s" % (DASH_NAME_ARG,), help="the display name for this dashboard instance.")
-    parser.add_argument("-c", "--%s" % (CONTAINER_NAME_ARG,), help="the name of the container you wish to create a dock for (default is to list all running containers in the dash).")
+    parser = argparse.ArgumentParser(\
+        description="creates a dashboard that lists port resolutions for a given docker container.")
+
+    parser.add_argument("-d", \
+                        "--%s" % (constants.DASH_NAME_ARG,), \
+                        help="the display name for this dashboard instance.")
+
+    parser.add_argument("-c", 
+                        "--%s" % (constants.CONTAINER_NAME_ARG,), 
+                        help="the name of the container you wish to create a dock for \
+                              (default is to list all running containers in the dash).")
     return parser
 
 
@@ -97,10 +114,14 @@ def parse_args(parser):
     args = parser.parse_args()
     parsedArgsDict = vars(args)
 
-    if (parsedArgsDict.get(DASH_NAME_ARG)):
-        parsedArgsDict[DASH_NAME_ARG] = "%s %s@%s" % (parsedArgsDict.get(DASH_NAME_ARG), getpass.getuser(), socket.gethostname())
+    if (parsedArgsDict.get(constants.DASH_NAME_ARG)):
+
+        parsedArgsDict[constants.DASH_NAME_ARG] = \
+            "%s %s@%s" % (parsedArgsDict.get(constants.DASH_NAME_ARG), getpass.getuser(), socket.gethostname())
+
     else:
-        parsedArgsDict[DASH_NAME_ARG] = "%s %s@%s" % (DEFAULT_DASH_NAME_PREFIX, getpass.getuser(), socket.gethostname())
+        parsedArgsDict[constants.DASH_NAME_ARG] = \
+            "%s %s@%s" % (constants.DEFAULT_DASH_NAME_PREFIX, getpass.getuser(), socket.gethostname())
 
     return parsedArgsDict
 
@@ -117,10 +138,13 @@ def get_container_names(parsedArgsDict):
 
     containerNames = list()
 
-    if (parsedArgsDict[CONTAINER_NAME_ARG]):
-        containerNames.append(parsedArgsDict[CONTAINER_NAME_ARG])
+    if (parsedArgsDict[constants.CONTAINER_NAME_ARG]):
+        containerNames.append(parsedArgsDict[constants.CONTAINER_NAME_ARG])
     else:
-        output = subprocess.Popen(["docker", "ps", "--format", 'table {{.Names}}'],stdout=subprocess.PIPE).communicate()[0]
+
+        output = subprocess.Popen(["docker", "ps", "-a", "--format", 'table {{.Names}}'], \
+                    stdout=subprocess.PIPE).communicate()[0]
+
         outputList = output.split()
         del outputList[0]
         containerNames = containerNames + outputList
@@ -135,7 +159,8 @@ def get_container_metadata_dict(containerNames):
     containerDict = dict()
 
     for containerName in containerNames:
-        output = subprocess.Popen(["docker", "inspect", "--format='{{json .Config}}'", containerName],stdout=subprocess.PIPE).communicate()[0]
+        output = subprocess.Popen(["docker", "inspect", "--format='{{json .Config}}'", containerName],
+            stdout=subprocess.PIPE).communicate()[0]
         containerDict[containerName]= output
 
     return containerDict
@@ -150,38 +175,52 @@ def get_container_metadata_dict(containerNames):
 
 def pretty_print_metadata(containerMetadataDict):
     for key, value in containerMetadataDict.iteritems():
-        print ("container is: " + key)
 
-        dockerdashDict = dict()
+        logging.info("container is: %s"  % (key) )
         valueDict = json.loads(value)
 
-        # TODO: breakout the key pruning into its own function
         # first filter by category
-        firstFilterValue = "dockerdash.c."
-        dockerdashLabelSet = { k[ len(firstFilterValue): ]  for k in valueDict['Labels'] if k.startswith(firstFilterValue) }
-
+        categoryFilter = constants.TOP_LEVEL_METATDATA_FILTER
+        foxyLabelSet = filter_keys_by_value(valueDict, categoryFilter)
+  
         # figure out how many categories there are
-        categoryCount = get_toplevel_highest_index(dockerdashLabelSet)
+        categoryCount = get_toplevel_highest_index(foxyLabelSet)
+        logging.info("there are %d categories" % (categoryCount))
 
         # figure out how many elements there are per category
         categoryElementDict = dict()
-        # TODO this is farty -- consider changing the metadata to start at '0' and not '1'
-        for i in range(1, categoryCount + 1):
-            categoryFilterValue = str(i) + ".e."
-            categoryLabelSubset = { k[ len(categoryFilterValue): ]  for k in dockerdashLabelSet if k.startswith(categoryFilterValue) }
-            elementCount = get_toplevel_highest_index(categoryLabelSubset)
-            categoryElementDict[i] = elementCount
 
-        print("there are %d categories" % (categoryCount))
+        for i in range(0, categoryCount):
+            elementFilter = str(i) + ".e."
+
+            elementLabelSubset = { k[ len(elementFilter): ]  \
+                                  for k in foxyLabelSet \
+                                  if k.startswith(elementFilter) }
+
+            elementCount = get_toplevel_highest_index(elementLabelSubset) + 1
+            categoryName = foxyLabelSet[str(i)]
+            categoryElementDict[categoryName] = elementCount
+
         for k, v in categoryElementDict.iteritems():
-            print("category %d has %d elements" % (k, v))
+            print("category %s has %d elements" % (k, v))
 
 
-def get_toplevel_highest_index(dockerdashLabelSet):
+
+def filter_keys_by_value(valueDict, filterValue):
+    """
+    """
+    return { k[ len(filterValue): ] : v \
+                for k, v in valueDict['Labels'].iteritems() \
+                    if k.startswith(filterValue) }
+
+
+
+
+def get_toplevel_highest_index(foxyLabelSet):
     """
     """
     count = 0
-    for k in dockerdashLabelSet:
+    for k in foxyLabelSet:
         if k.split('.')[0] > count:
             count = k.split('.')[0]
 

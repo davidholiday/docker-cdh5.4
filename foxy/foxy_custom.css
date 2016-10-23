@@ -35,6 +35,9 @@
 
 }
 
+.json-view .comments {
+	color: #ff00ff;
+}
 
 .json-view .bool, .json-view .null, .json-view .num, .json-view .undef {
     font-weight: 700;
