@@ -47,11 +47,10 @@ def main():
     parser = get_parser()
     parsedArgsDict = parse_args(parser)
     containerNames = get_container_names(parsedArgsDict)
-    containerMetadataDict = get_container_metadata_dict(containerNames)
+    containerInfoDict = get_container_info_dict(containerNames)
+    foxyDataDict = get_foxydata_dict(containerInfoDict)
 
-
-    pretty_print_metadata(containerMetadataDict)
-
+    print(foxyDataDict)
 
 
 #    for key, value in containerMetadataDict.iteritems():
@@ -152,30 +151,29 @@ def get_container_names(parsedArgsDict):
     return containerNames
 
 
-def get_container_metadata_dict(containerNames):
+def get_container_info_dict(containerNames):
     """
 
     """
-    containerDict = dict()
+    containerInfoDict = dict()
 
     for containerName in containerNames:
         output = subprocess.Popen(["docker", "inspect", "--format='{{json .Config}}'", containerName],
             stdout=subprocess.PIPE).communicate()[0]
-        containerDict[containerName]= output
+        containerInfoDict[containerName]= output
 
-    return containerDict
+    return containerInfoDict
 
 
 
-# TODO use exec function to dynamically convert dockerdash metadata into a nested dict
-#
-# 1) arr = k.split('.')
-# 2) for v in arr --> add to dict by creating a string and exec'ing it
-# 3) enumerate through the list of keys and populate the nested dict
+# TODO blarg -- come back to this -- it feels like a code smell...
+def get_foxydata_dict(containerInfoDict):
+    """
+    """
+    
+    foxyDataDict = dict()
 
-def pretty_print_metadata(containerMetadataDict):
-
-    for key, value in containerMetadataDict.iteritems():
+    for key, value in containerInfoDict.iteritems():
 
         logging.info("container is: %s"  % (key) )
         valueDict = json.loads(value)
@@ -189,30 +187,10 @@ def pretty_print_metadata(containerMetadataDict):
         categoryCount = get_index_ceiling(foxyMetaData)
         logging.info("there are %d categories" % (categoryCount))
 
-        # parse the metadata to a dict
-        categoryElementDict = dict()
+        # parse the metadata to a dict   
+        foxyDataDict[key] = get_foxydata_and_tables_for_container(categoryCount, foxyMetaData)  
 
-        for i in range(0, categoryCount):
-            elementFilter = str(i) + ".e."
-            elementMetaData = filter_by_namespace(foxyMetaData, elementFilter)
-            elementCount = get_index_ceiling(elementMetaData) 
-
-            elementDict = dict()
-            for k in range(0, elementCount):
-                elementName = elementMetaData[str(k)]
-                attributeFilter = str(k) + "."
-                elementDict[elementName] = filter_by_namespace(elementMetaData, attributeFilter)
-                
-            categoryName = foxyMetaData[str(i)]
-            logging.info("category %s has %d elements" % (categoryName, elementCount))
-            categoryElementDict[categoryName] = elementDict
-            
-        print(categoryElementDict)
-        
-        
-
-        
-        logging.info("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n")
+    return foxyDataDict 
 
 
 
@@ -240,6 +218,29 @@ def get_index_ceiling(foxyMetaData):
     return (count + 1) if (len(foxyMetaData) > 0) else (count)
 
 
+# TODO
+# this method needs to also create the html tables -- no sense in iterating
+# over all the data twice if you don't have to...
+def get_foxydata_and_tables_for_container(categoryCount, foxyMetaData):
+    """
+    """
+    containerFoxyDataDict = dict()
+    for i in range(0, categoryCount):
+        elementFilter = str(i) + ".e."
+        elementMetaData = filter_by_namespace(foxyMetaData, elementFilter)
+        elementCount = get_index_ceiling(elementMetaData) 
+
+        elementDict = dict()
+        for k in range(0, elementCount):
+            elementName = elementMetaData[str(k)]
+            attributeFilter = str(k) + "."
+            elementDict[elementName] = filter_by_namespace(elementMetaData, attributeFilter)
+                
+        categoryName = foxyMetaData[str(i)]
+        logging.info("category %s has %d elements" % (categoryName, elementCount))
+        containerFoxyDataDict[categoryName] = elementDict    
+
+    return containerFoxyDataDict
 
 
 
