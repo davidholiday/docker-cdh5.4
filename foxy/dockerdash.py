@@ -50,7 +50,7 @@ def main():
     containerInfoDict = get_container_info_dict(containerNames)
     foxyDataDict = get_foxydata_dict(containerInfoDict)
 
-    print(foxyDataDict)
+    #print(foxyDataDict)
 
 
 #    for key, value in containerMetadataDict.iteritems():
@@ -156,12 +156,8 @@ def get_container_info_dict(containerNames):
 
     """
     containerInfoDict = dict()
-###
-### !! TODO !! output only contains one of the categories available -- .Config needs to be a wildcard of some kind!! 
-###
     for containerName in containerNames:
         output = subprocess.Popen(["docker", "inspect", "--format='{{json .}}'", containerName],
-        #output = subprocess.Popen(["docker", "inspect", containerName],    
             stdout=subprocess.PIPE).communicate()[0]
         containerInfoDict[containerName]= output
 
@@ -169,38 +165,26 @@ def get_container_info_dict(containerNames):
 
 
 
-# TODO blarg -- come back to this -- it feels like a code smell...
+
 def get_foxydata_dict(containerInfoDict):
     """
     """
     
     foxyDataDict = dict()
-
     for key, value in containerInfoDict.iteritems():
 
         logging.info("container is: %s"  % (key) )
         valueDict = json.loads(value)
-        #print(type(valueDict))
-        #print(valueDict)
-
         metaDataDict = valueDict['Config']['Labels']
-        #print(valueDict)
-        portsDict = dict()
-        if valueDict['State']['Running'] == 'true':
-            portsDict = valueDict['NetworkSettings']['Ports']
-            print(portsDict)
-
-        # first filter by category
-        categoryFilter = constants.TOP_LEVEL_METATDATA_FILTER
-        foxyMetaData = filter_by_namespace(metaDataDict, categoryFilter)
         
-        # figure out how many categories there are
-        # categoryCount = get_index_ceiling(foxyMetaData)
-        # logging.info("there are %d categories" % (categoryCount))
-
-        # parse the metadata to a dict   
-        foxyDataDict[key] = get_foxydata_for_container(foxyMetaData)  
-
+        portsDict = dict()
+        if valueDict['State']['Running'] == True:
+            portsDict = valueDict['NetworkSettings']['Ports']
+            
+        foxyFilter = constants.TOP_LEVEL_METATDATA_FILTER
+        foxyDataDict = filter_by_namespace(metaDataDict, foxyFilter)
+        foxyDataDict[constants.DOCKER_PORT_KEY] = portsDict
+        print(foxyDataDict)
     return foxyDataDict 
 
 
@@ -228,8 +212,6 @@ def get_index_ceiling(foxyMetaData):
 """
 
 
-def get_foxydata_for_container(foxyMetaData):
-    print(foxyMetaData)
 
 
 # TODO
