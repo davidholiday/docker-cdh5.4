@@ -136,8 +136,8 @@ def get_container_panel_content_template():
 </div> 
  <div class="panel-body">
     <ul class="nav nav-pills">
-        <li class="active"><a href="#ports" data-toggle="tab" aria-expanded="true">ports</a></li>
-        <li class=""><a href="#info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <li class="active"><a href="#$PORTS_DIV_ID" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#$INFO_DIV_ID" data-toggle="tab" aria-expanded="false">info</a></li> 
         <a href="#" class="btn $BUTTON_TYPE pull-right">$BUTTON_LABEL Container</a>
     </ul>
     <div class="tab-content"> 
@@ -152,10 +152,15 @@ def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDic
     containerPanelContentTemplate = get_container_panel_content_template()
     containerPanelTabContent = get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict)
 
+    portsDivID = containerName + "_ports"
+    infoDivID = containerName + "_info"
+
     containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, 
                                                                      TAB_CONTENT = containerPanelTabContent,
                                                                      BUTTON_TYPE = buttonType,
-                                                                     BUTTON_LABEL = buttonLabel)
+                                                                     BUTTON_LABEL = buttonLabel,
+                                                                     PORTS_DIV_ID = portsDivID,
+                                                                     INFO_DIV_ID = infoDivID)
     return containerPanelContent
 
 
@@ -163,10 +168,10 @@ def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDic
 
 def get_container_tab_content_template():
     return string.Template("""
-<div id="ports" class="tab-pane fade in active">
+<div id="$PORTS_DIV_ID" class="tab-pane fade in active">
     $TABLES
 </div>
-<div id="info" class="tab-pane fade">
+<div id="$INFO_DIV_ID" class="tab-pane fade">
     <script>
         var json = (function() {
             var json = null;
@@ -182,7 +187,7 @@ def get_container_tab_content_template():
             return json;
             })();
 
-        $$('#info').jsonView(json)
+        $$('#$INFO_DIV_ID').jsonView(json)
     </script>
 </div> """)                  
   
@@ -195,7 +200,15 @@ def get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict):
     tables = get_container_port_tables(containerName, categoryToPortsDict, foxyDataDict)
     containerInfoURL = "./json/" + containerName + "_info.json"
     tab_content_template = get_container_tab_content_template()
-    tab_content = tab_content_template.substitute(TABLES = tables, CONTAINER_INFO_URL = containerInfoURL)
+
+    portsDivID = containerName + "_ports"
+    infoDivID = containerName + "_info"
+
+    tab_content = tab_content_template.substitute(TABLES = tables, 
+                                                  CONTAINER_INFO_URL = containerInfoURL,
+                                                  PORTS_DIV_ID = portsDivID,
+                                                  INFO_DIV_ID = infoDivID)
+
     return tab_content
 
 

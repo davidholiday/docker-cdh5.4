@@ -258,9 +258,9 @@ def serialize_inner_dict_as_json(filenameSuffix, dictionary):
     
     for k, v in dictionary.iteritems():
         filename = k + "_" + filenameSuffix + ".json"
-        
+        v_asJSON = json.dumps(v, ensure_ascii=False)
         with io.open("./json/" + filename, 'w', encoding="utf-8") as outfile:
-            outfile.write(unicode(v))
+            outfile.write(unicode(v_asJSON))
 
 
 

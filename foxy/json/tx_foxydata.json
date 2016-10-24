@@ -1,1 +1,1 @@
-{'Ports': {u'4040/tcp': {u'HostPort': u'4040', u'HostIp': u'0.0.0.0'}, u'4041/tcp': {u'HostPort': u'4041', u'HostIp': u'0.0.0.0'}, u'8888/tcp': {u'HostPort': u'8888', u'HostIp': u'0.0.0.0'}}}
+{"Ports": {}}
