@@ -142,7 +142,7 @@ def get_container_info_dict(containerNames):
         output = subprocess.Popen(["docker", "inspect", "--format='{{json .}}'", containerName],
             stdout=subprocess.PIPE).communicate()[0]
 
-        containerInfoDict[containerName]= json.loads(output)
+        containerInfoDict[containerName] = json.loads(output)
     
     return containerInfoDict
 
@@ -162,7 +162,12 @@ def get_foxydata_dict(containerInfoDict):
         portsDict = dict()
         if valueDict['State']['Running'] == True:
             portsDict = valueDict['NetworkSettings']['Ports']
-            
+
+        # because the vals are given to us as lists of dicts and we need them to be dicts
+        for k, v in portsDict.iteritems():
+            portsDict[k] = v[0]
+
+
         foxyFilter = constants.TOP_LEVEL_METATDATA_FILTER
         containerFoxyDataDict = filter_by_namespace(metaDataDict, foxyFilter)
         containerFoxyDataDict[constants.DOCKER_PORT_KEY] = portsDict
@@ -194,6 +199,7 @@ def make_foxy_files(containerInfoDict, foxyDataDict):
         panelType = "panel-info"
         containerName = k
         categoryToPortsDict = get_category_to_ports_dict(containerName, foxyDataDict)
+        #portToDataDict = foxyDataDict[containerName][constants.DOCKER_PORT_KEY]
 
         c = template_factory.get_container_panel(panelType, 
                                                  containerName, 

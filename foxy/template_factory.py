@@ -2,16 +2,16 @@
 
 import constants
 import string
-
+import json
 
 def get_container_panel_template():
-    return string.Template('''. <div class="panel $PANEL_TYPE panel-fluid"> 
+    return string.Template('''  <div class="panel $PANEL_TYPE panel-fluid"> 
                                     $CONTAINER_PANEL_CONTENTS 
                                 </div>
                                 <div class="spacer50"></div>''')
 
 
-def get_container_panel(panelType, containerName, categoryToPortsDict, portToDataDict, containerInfo):
+def get_container_panel(panelType, containerName, categoryToPortsDict, foxyDataDict, containerInfo):
     
     buttonType = ""
     buttonLabel = ""
@@ -25,7 +25,7 @@ def get_container_panel(panelType, containerName, categoryToPortsDict, portToDat
 
     containerPanelContents = get_container_panel_contents(containerName, 
                                                           categoryToPortsDict, 
-                                                          portToDataDict,
+                                                          foxyDataDict,
                                                           buttonType,
                                                           buttonLabel)
 
@@ -55,9 +55,9 @@ def get_container_panel_content_template():
 
 
 
-def get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict, buttonType, buttonLabel):
+def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDict, buttonType, buttonLabel):
     containerPanelContentTemplate = get_container_panel_content_template()
-    containerPanelTabContent = get_container_tab_content(containerName, categoryToPortsDict, portToDataDict)
+    containerPanelTabContent = get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict)
 
     containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, 
                                                                      TAB_CONTENT = containerPanelTabContent,
@@ -98,8 +98,8 @@ def get_container_tab_content_template():
 
 
 
-def get_container_tab_content(containerName, categoryToPortsDict, portToDataDict):
-    tables = get_container_port_tables(categoryToPortsDict, portToDataDict)
+def get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict):
+    tables = get_container_port_tables(containerName, categoryToPortsDict, foxyDataDict)
     containerInfoURL = "./json/" + containerName + "_info.json"
     tab_content_template = get_container_tab_content_template()
     tab_content = tab_content_template.substitute(TABLES = tables, CONTAINER_INFO_URL = containerInfoURL)
@@ -108,21 +108,24 @@ def get_container_tab_content(containerName, categoryToPortsDict, portToDataDict
 
 
 
-def get_container_port_tables(categoryToPortsDict, portToDataDict):
+def get_container_port_tables(containerName, categoryToPortsDict, foxyDataDict):
+    containerFoxyDataDict = foxyDataDict[containerName]
+
     returnVal = ""
 
     for category, portDict in categoryToPortsDict.iteritems():
-        portCategoryTable = get_container_port_category_table(category, portDict, portToDataDict)
+        portCategoryTable = get_container_port_category_table(category, portDict, containerFoxyDataDict)
         returnVal = returnVal + portCategoryTable
 
     return returnVal
 
 
 
-def get_container_port_category_table(category, portDict, portToDataDict):
+def get_container_port_category_table(category, portDict, containerFoxyDataDict):
     rows = ""
     for port in portDict:
-        rows = rows + get_container_port_category_table_row(port, portToDataDict)
+        portKey = port + constants.DOCKER_PORTS_VALUE_SUFFIX
+        rows = rows + get_container_port_category_table_row(portKey, containerFoxyDataDict)
     
     tableTemplate = get_container_port_category_table_template()
     table = tableTemplate.substitute(TABLE_ROWS = rows, CATEGORY_NAME = category)
@@ -153,24 +156,52 @@ def get_container_port_category_table_template():
 
 
 
-def get_container_port_category_table_row(port, portToDataDict):
-    row_template = get_container_port_category_table_row_template(port, portToDataDict)
-    attributes = portToDataDict[FOXY_PORT_ATTRIBUTE_KEY]
-    html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
-    row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
+def get_container_port_category_table_row(port, containerFoxyDataDict):
+    row_template = get_container_port_category_table_row_template(port, containerFoxyDataDict)
+    foxyPort = getFoxyPort(port)
+    foxyAttributeKey = foxyPort + "." +  constants.FOXY_PORT_ATTRIBUTE_KEY
+
+    if foxyAttributeKey in containerFoxyDataDict:
+        attributes = containerFoxyDataDict[foxyAttributeKey]
+        html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
+        row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
+    else:
+        row = row_template.substitute(ATTRIBUTES = '')
+
+
+
     return row
 
 
-def get_container_port_category_table_row_template(port, portToDataDict):
-    print portToDataDict
+
+
+
+
+def get_container_port_category_table_row_template(port, containerFoxyDataDict):
+    #print (containerFoxyDataDict)
+    foxyPort = getFoxyPort(port)
+    foxyPortNameKey = foxyPort + "." + constants.FOXY_PORT_NAME_KEY
+
     return string.Template(
              """<tr>
-                <td>""" + portToDataDict[port][constants.FOXY_PORT_NAME_KEY] + """</td>
+                <td>""" + containerFoxyDataDict[foxyPortNameKey] + """</td>
                 <td>""" + port + """</td>
-                <td>""" + portToDataDict[port][DOCKER_PORTS_HOST_IP_KEY] + 
+                <td>""" + containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_IP_KEY] + 
                              """ : """ + 
-                             portToDataDict[port][DOCKER_PORTS_HOST_PORT_KEY] + """</td>
+                             containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_PORT_KEY] + 
+                             """</td>
                 <td>$ATTRIBUTES /td></tr>""")
+
+
+
+
+
+
+# some lists have the '/tcp' tag on the port and some don't 
+# until I get around to normalizing the data this kludge will have to do...
+def getFoxyPort(port):
+    return port.replace(constants.DOCKER_PORTS_VALUE_SUFFIX, '')
+
 
 
 
@@ -180,7 +211,7 @@ def get_container_port_category_table_row_attributes(attributes):
     
     returnVal = ""
     for attribute in attributes:
-        if (attribute == FOXY_WEB_ATTRIBUTE):
+        if (attribute == constants.FOXY_WEB_ATTRIBUTE):
             returnVal = returnVal + """<span class="button button-lg button-default">""" + \
                                   attribute + \
                                   """Default</span>"""
