@@ -1,5 +1,6 @@
-# constants file for foxy
-#
+'''
+constants file to help keep the foxy code DRY
+'''
 
 
 DEFAULT_DASH_NAME_PREFIX = "dockerdash for "
