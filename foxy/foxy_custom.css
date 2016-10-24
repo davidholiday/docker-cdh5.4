@@ -9,6 +9,7 @@
 
 /* set a max-width for horizontal fluid layout and make it centered */
 .panel-fluid {
+  /*margin-top: 100px;*/
   margin-right: auto;
   margin-left: auto;
   max-width: 950px; /* or 950px */
@@ -19,6 +20,14 @@
 	border-bottom-color: #2b3e50;
 }
 
+
+.anchor { 
+	padding-top: 50px; 
+}
+
+.content-container {
+    margin-top: 100px;
+}
 
 
 table

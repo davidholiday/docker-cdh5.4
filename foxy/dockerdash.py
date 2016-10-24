@@ -220,7 +220,7 @@ def make_foxy_files(containerInfoDict, foxyDataDict):
                                                               containerInfoDict)
         containerPanels.append(containerPanel)
 
-    page = template_factory.get_page(containerPanels)
+    page = template_factory.get_page(containerInfoDict, containerPanels)
     f = open('index_generated.html', 'w')
     f.write(page)
     f.close()

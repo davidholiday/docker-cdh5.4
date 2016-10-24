@@ -60,9 +60,8 @@ def get_page_template():
                         
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">CONTAINERS <span class="caret"></span></a>
-                        
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
+                                $DROPDOWN_ITEMS
                             </ul>
                         </li>
 
@@ -73,10 +72,15 @@ def get_page_template():
            </div>
         </nav>
 
-        <!-- put some space between the nav bar and the panels -->
-        <div class="spacer100"></div>
 
-        $CONTAINER_PANELS
+        <div class="content-container">       
+            $CONTAINER_PANELS
+        </div>
+
+        <!-- put some space at the footer so we can scroll the last panel to the top of the screen -->
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
 
     </body>
 
@@ -85,22 +89,47 @@ def get_page_template():
         """)
 
 
-def get_page(containerPanels):
+def get_dropdown_item_template():
+    return string.Template("""
+<li><a href="#$CONTAINER_PANEL_NAME">$CONTAINER_NAME</a></li>
+""")
+
+
+def get_page(containerInfoDict, containerPanels):
     # expects a list
+
+    # dropdown
+    dropdownItems = ""
+    for k, v in containerInfoDict.iteritems():
+        containerName = k
+        containerPanelName = containerName + "_panel"
+        dropdownItemTemplate = get_dropdown_item_template()
+
+        dropdownItemContent = dropdownItemTemplate.substitute(CONTAINER_NAME = containerName,
+                                                              CONTAINER_PANEL_NAME = containerPanelName)
+        
+        dropdownItems = dropdownItems + dropdownItemContent
+
+    # content panels
     sep = "\n"
     containerPanelString = sep.join(containerPanels) 
     pageTemplate = get_page_template();
-    page = pageTemplate.substitute(CONTAINER_PANELS = containerPanelString)
+
+    page = pageTemplate.substitute(CONTAINER_PANELS = containerPanelString,
+                                   DROPDOWN_ITEMS = dropdownItems)
+    
     return page
 
 
 
 def get_container_panel_template():
-    return string.Template("""  
+    return string.Template(""" 
+<div class="anchor" id="$CONTAINER_PANEL_NAME">      
 <div class="panel $PANEL_TYPE panel-fluid"> 
     $CONTAINER_PANEL_CONTENTS 
 </div>
-<div class="spacer50"></div>""")
+</div>
+<!--<div class="spacer50"></div>-->""")
 
 
 
@@ -122,8 +151,10 @@ def get_container_panel(panelType, containerName, categoryToPortsDict, foxyDataD
                                                           buttonType,
                                                           buttonLabel)
 
+    containerPanelName = containerName + "_panel"
     containerPanelTemplate = get_container_panel_template()
-    containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_CONTENTS = containerPanelContents,
+    containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_NAME = containerPanelName,
+                                                       CONTAINER_PANEL_CONTENTS = containerPanelContents,
                                                        PANEL_TYPE = panelType)
     return containerPanel
 
@@ -187,7 +218,7 @@ def get_container_tab_content_template():
             return json;
             })();
 
-        $$('#$INFO_DIV_ID').jsonView(json)
+        $$('#$INFO_DIV_ID').jsonView(json, { collapsed: true } );
     </script>
 </div> """)                  
   
@@ -270,7 +301,10 @@ def get_container_port_category_table_row(port, containerFoxyDataDict):
 
     if foxyAttributeKey in containerFoxyDataDict:
         attribute = containerFoxyDataDict[foxyAttributeKey]
-        html_a_fied_attributes = get_container_port_category_table_row_attribute(attribute)
+
+        html_a_fied_attributes = \
+            get_container_port_category_table_row_attribute(attribute, port, containerFoxyDataDict)
+        
         row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
     else:
         row = row_template.substitute(ATTRIBUTES = '')
@@ -314,19 +348,24 @@ def getFoxyPort(port):
 
 
 
-def get_container_port_category_table_row_attribute(attribute):
+def get_container_port_category_table_row_attribute(attribute, port, containerFoxyDataDict):
     
     returnVal = ""
-    #for attribute in attributes:
-    #    print attribute + " " + attributes
+
     if (attribute == constants.FOXY_WEB_ATTRIBUTE):
-        returnVal = returnVal + """<span class="btn btn btn-success">""" + \
-                              str(attribute) + \
-                              """</span>"""
+        hostIP = containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_IP_KEY]
+        hostPort = containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_PORT_KEY]
+        foxyLink = "http://" + hostIP + ":" + str(hostPort)
+
+        returnVal = returnVal + """<a target="_blank" href=" """ + foxyLink + \
+                                """ style="text-decoration: none"> """ + \
+                                """<span class="btn btn btn-success"> """ + \
+                                str(attribute) + \
+                                """</span></a>"""
     else: 
         returnVal = returnVal + """<span class="label label label-warning">""" + \
-                              str(attribute) + \
-                              """</span>"""
+                                str(attribute) + \
+                                """</span>"""
 
     return returnVal
 

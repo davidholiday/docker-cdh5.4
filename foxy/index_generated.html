@@ -52,9 +52,20 @@
                         
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">CONTAINERS <span class="caret"></span></a>
-                        
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
+                                
+<li><a href="#tx_panel">tx</a></li>
+
+<li><a href="#t1_panel">t1</a></li>
+
+<li><a href="#roots_derriere_panel">roots_derriere</a></li>
+
+<li><a href="#foxy_test_panel">foxy_test</a></li>
+
+<li><a href="#caochong-ambari-1_panel">caochong-ambari-1</a></li>
+
+<li><a href="#caochong-ambari-0_panel">caochong-ambari-0</a></li>
+
                             </ul>
                         </li>
 
@@ -65,10 +76,10 @@
            </div>
         </nav>
 
-        <!-- put some space between the nav bar and the panels -->
-        <div class="spacer100"></div>
 
-          
+        <div class="content-container">       
+             
+<div class="anchor" id="tx_panel">      
 <div class="panel panel-default panel-fluid"> 
     
 <div class="panel-heading">
@@ -101,14 +112,16 @@
             return json;
             })();
 
-        $('#tx_info').jsonView(json)
+        $('#tx_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
-  
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="t1_panel">      
 <div class="panel panel-default panel-fluid"> 
     
 <div class="panel-heading">
@@ -141,14 +154,16 @@
             return json;
             })();
 
-        $('#t1_info').jsonView(json)
+        $('#t1_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
-  
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="roots_derriere_panel">      
 <div class="panel panel-info panel-fluid"> 
     
 <div class="panel-heading">
@@ -181,14 +196,16 @@
             return json;
             })();
 
-        $('#roots_derriere_info').jsonView(json)
+        $('#roots_derriere_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
-  
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="foxy_test_panel">      
 <div class="panel panel-info panel-fluid"> 
     
 <div class="panel-heading">
@@ -244,7 +261,7 @@
     <td>notebook</td>
     <td>6666/tcp</td>
     <td>0.0.0.0 : 32779</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32779 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -266,12 +283,12 @@
     <td>NameNode HTTPS UI</td>
     <td>50470/tcp</td>
     <td>0.0.0.0 : 32768</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32768 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>DataNode UI</td>
     <td>50075/tcp</td>
     <td>0.0.0.0 : 32769</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32769 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>NameNode</td>
     <td>8020/tcp</td>
@@ -298,7 +315,7 @@
     <td>ZooKeeper Client</td>
     <td>2181/tcp</td>
     <td>0.0.0.0 : 32781</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32781 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -320,7 +337,7 @@
     <td>MapReduce JobHistory UI</td>
     <td>19888/tcp</td>
     <td>0.0.0.0 : 32770</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32770 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -347,12 +364,12 @@
     <td>Node Manager</td>
     <td>8042/tcp</td>
     <td>0.0.0.0 : 32776</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32776 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>Resource Manager UI</td>
     <td>8088/tcp</td>
     <td>0.0.0.0 : 32775</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32775 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -428,7 +445,7 @@
     <td>Local Client Driver HTTP UI</td>
     <td>4040/tcp</td>
     <td>0.0.0.0 : 32780</td>
-    <td><span class="btn btn btn-success">web</span> </td></tr>
+    <td><a target="_blank" href=" http://0.0.0.0:32780 style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -449,14 +466,16 @@
             return json;
             })();
 
-        $('#foxy_test_info').jsonView(json)
+        $('#foxy_test_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
-  
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="caochong-ambari-1_panel">      
 <div class="panel panel-default panel-fluid"> 
     
 <div class="panel-heading">
@@ -489,14 +508,16 @@
             return json;
             })();
 
-        $('#caochong-ambari-1_info').jsonView(json)
+        $('#caochong-ambari-1_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
-  
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="caochong-ambari-0_panel">      
 <div class="panel panel-default panel-fluid"> 
     
 <div class="panel-heading">
@@ -529,13 +550,20 @@
             return json;
             })();
 
-        $('#caochong-ambari-0_info').jsonView(json)
+        $('#caochong-ambari-0_info').jsonView(json, { collapsed: true } );
     </script>
 </div> 
     </div>                 
 </div> 
 </div>
-<div class="spacer50"></div>
+</div>
+<!--<div class="spacer50"></div>-->
+        </div>
+
+        <!-- put some space at the footer so we can scroll the last panel to the top of the screen -->
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
 
     </body>
 
