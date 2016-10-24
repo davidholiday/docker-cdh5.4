@@ -21,6 +21,12 @@
 
 
 
+table
+{
+    table-layout: fixed;
+    width: 100px;
+}
+
 
 /*
 .table-striped > tbody > tr:nth-of-type(odd) {

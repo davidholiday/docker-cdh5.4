@@ -103,7 +103,7 @@ def get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict):
     containerInfoURL = "./json/" + containerName + "_info.json"
     tab_content_template = get_container_tab_content_template()
     tab_content = tab_content_template.substitute(TABLES = tables, CONTAINER_INFO_URL = containerInfoURL)
-
+    return tab_content
 
 
 
@@ -137,7 +137,7 @@ def get_container_port_category_table(category, portDict, containerFoxyDataDict)
 def get_container_port_category_table_template():
     return string.Template(
             """ <div class="page-header">
-                    <h4 id="$CATEGORY_NAME>$CATEGORY_NAME</h4>
+                    <h4 id="$CATEGORY_NAME">$CATEGORY_NAME</h4>
                 </div>  
                 <table class="table table-striped table-hover ">
                     <thead>
@@ -162,8 +162,8 @@ def get_container_port_category_table_row(port, containerFoxyDataDict):
     foxyAttributeKey = foxyPort + "." +  constants.FOXY_PORT_ATTRIBUTE_KEY
 
     if foxyAttributeKey in containerFoxyDataDict:
-        attributes = containerFoxyDataDict[foxyAttributeKey]
-        html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
+        attribute = containerFoxyDataDict[foxyAttributeKey]
+        html_a_fied_attributes = get_container_port_category_table_row_attribute(attribute)
         row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
     else:
         row = row_template.substitute(ATTRIBUTES = '')
@@ -190,7 +190,7 @@ def get_container_port_category_table_row_template(port, containerFoxyDataDict):
                              """ : """ + 
                              containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_PORT_KEY] + 
                              """</td>
-                <td>$ATTRIBUTES /td></tr>""")
+                <td>$ATTRIBUTES </td></tr>""")
 
 
 
@@ -207,18 +207,19 @@ def getFoxyPort(port):
 
 
 
-def get_container_port_category_table_row_attributes(attributes):
+def get_container_port_category_table_row_attribute(attribute):
     
     returnVal = ""
-    for attribute in attributes:
-        if (attribute == constants.FOXY_WEB_ATTRIBUTE):
-            returnVal = returnVal + """<span class="button button-lg button-default">""" + \
-                                  attribute + \
-                                  """Default</span>"""
-        else: 
-            returnVal = returnVal + """<span class="label label-lg label-default">""" + \
-                                  attribute + \
-                                  """Default</span>"""
+    #for attribute in attributes:
+    #    print attribute + " " + attributes
+    if (attribute == constants.FOXY_WEB_ATTRIBUTE):
+        returnVal = returnVal + """<span class="btn btn btn-info">""" + \
+                              str(attribute) + \
+                              """</span>"""
+    else: 
+        returnVal = returnVal + """<span class="label label label-info">""" + \
+                              str(attribute) + \
+                              """</span>"""
 
     return returnVal
 
