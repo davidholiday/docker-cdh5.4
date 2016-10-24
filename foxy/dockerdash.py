@@ -6,7 +6,7 @@ import json
 import getpass
 import subprocess
 import socket
-
+import io
 
 import constants
 
@@ -51,9 +51,9 @@ def main():
     containerNames = get_container_names(parsedArgsDict)
     containerInfoDict = get_container_info_dict(containerNames)
     foxyDataDict = get_foxydata_dict(containerInfoDict)
+    
+    make_foxy_files(containerInfoDict, foxyDataDict)
 
-    #serialize_foxydata(foxydataDict)
-    #foxydata_to_html(foxydataDict)
 
 
 def setup_logging():
@@ -163,9 +163,10 @@ def get_foxydata_dict(containerInfoDict):
             portsDict = valueDict['NetworkSettings']['Ports']
             
         foxyFilter = constants.TOP_LEVEL_METATDATA_FILTER
-        foxyDataDict = filter_by_namespace(metaDataDict, foxyFilter)
-        foxyDataDict[constants.DOCKER_PORT_KEY] = portsDict
-        print(foxyDataDict)
+        containerFoxyDataDict = filter_by_namespace(metaDataDict, foxyFilter)
+        containerFoxyDataDict[constants.DOCKER_PORT_KEY] = portsDict
+        foxyDataDict[key] = containerFoxyDataDict
+
     return foxyDataDict 
 
 
@@ -182,18 +183,19 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 
+def make_foxy_files(containerInfoDict, foxyDataDict):
+    serializeInnerDictAsJSON('info', containerInfoDict)
+    serializeInnerDictAsJSON('foxydata', foxyDataDict)
 
-def foxydata_to_html(foxydataDict):
-    return template_factory.get_container_panel(containerName, categoryToPortsDict, portToDataDict)
 
+# assumes dicts of dicts!
+def serializeInnerDictAsJSON(filenameSuffix, dictionary):
     
-
-
-def serialize_foxydata(foxydataDict):
-    """
-    """
-    print()
-
+    for k, v in dictionary.iteritems():
+        filename = k + "_" + filenameSuffix + ".json"
+        
+        with io.open("./json/" + filename, 'w', encoding="utf-8") as outfile:
+            outfile.write(unicode(v))
 
 
 
