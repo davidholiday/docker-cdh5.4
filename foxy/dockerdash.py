@@ -49,29 +49,9 @@ def main():
     containerNames = get_container_names(parsedArgsDict)
     containerInfoDict = get_container_info_dict(containerNames)
     foxyDataDict = get_foxydata_dict(containerInfoDict)
+    foxydata_to_html(foxydataDict)
+    serialize_foxydata(foxydataDict)
 
-    #print(foxyDataDict)
-
-
-#    for key, value in containerMetadataDict.iteritems():
-#        print(key)
-#        parsedJSON = json.loads(value)
-#        print(json.dumps(parsedJSON, indent=4, sort_keys=True))
-
-
-
-    # parse the dash name and filter values
-
-
-
-    # parse the output from docker ps
-
-    # parse and update the template file, including the canary port if listed  
-    # (unknown if no canary port is the default)
-
-    # serialize the template file
-
-    # open default browser instance with dash instance
 
 
 def setup_logging():
@@ -168,8 +148,7 @@ def get_container_info_dict(containerNames):
 
 def get_foxydata_dict(containerInfoDict):
     """
-    """
-    
+    """    
     foxyDataDict = dict()
     for key, value in containerInfoDict.iteritems():
 
@@ -201,45 +180,21 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 
-"""
-def get_index_ceiling(foxyMetaData):
-    count = 0
-    for k in foxyMetaData:
-        if k.split('.')[0] > count:
-            count = k.split('.')[0]
-    count = int(count)
-    return (count + 1) if (len(foxyMetaData) > 0) else (count)
-"""
+
+def foxydata_to_html(foxydataDict):
+    """
+    """
+    print()
+
+    
 
 
+def serialize_foxydata(foxydataDict):
+    """
+    """
+    print()
 
 
-# TODO
-# this method needs to also create the html tables -- no sense in iterating
-# over all the data twice if you don't have to...
-#
-# TODO totally refactor this (and the metadata scheme) order things 
-# protocol first. This way you don't have to n^2 this pig...
-"""
-def get_foxydata_and_tables_for_container(categoryCount, foxyMetaData):
-    containerFoxyDataDict = dict()
-    for i in range(0, categoryCount):
-        elementFilter = str(i) + ".e."
-        elementMetaData = filter_by_namespace(foxyMetaData, elementFilter)
-        elementCount = get_index_ceiling(elementMetaData) 
-
-        elementDict = dict()
-        for k in range(0, elementCount):
-            elementName = elementMetaData[str(k)]
-            attributeFilter = str(k) + "."
-            elementDict[elementName] = filter_by_namespace(elementMetaData, attributeFilter)
-                
-        categoryName = foxyMetaData[str(i)]
-        logging.info("category %s has %d elements" % (categoryName, elementCount))
-        containerFoxyDataDict[categoryName] = elementDict    
-
-    return containerFoxyDataDict
-"""
 
 
 def arg_check(arg, clazz):

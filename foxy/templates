@@ -1,0 +1,95 @@
+// panel banner and button bar
+<div class="panel-heading">
+<h3>{$CONTAINER_ID}</h3>
+</div> 
+<div class="panel-body">
+<ul class="nav nav-pills">
+<li class="active"><a href="#ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+<li class=""><a href="#info" data-toggle="tab" aria-expanded="false">info</a></li> 
+<a href="#" class="btn {$BUTTON_TYPE} pull-right">{$BUTTON_LABEL} Container</a>
+</ul>
+<div class="tab-content">
+
+
+{$PORTS_DIV_AND_HEADER}
+
+{$PORTS_TABLE}
+
+</div> // closes ports 
+
+{$INFO_DIV}
+
+
+
+
+
+
+
+
+
+// INFO DIV
+<div id="info" class="tab-pane fade">
+                        <script>
+                        var json = (function() {
+                            var json = null;
+                            $.ajax({
+                                'async': false,
+                                'global': false,
+                                'url': "{$CONTAINER_JSON_FILE}",
+                                'dataType': "json",
+                                'success': function (data) {
+                                json = data;
+                            }
+                        });
+                        return json;
+                        })();
+
+
+                        $('#info').jsonView(json)
+                        </script>
+                    </div>
+
+
+
+
+// ports header
+<div id="ports" class="tab-pane fade in active">
+<div class="page-header">
+<h4 id="{$CATEGORY_NAME}@{$CONTAINER_ID}">{$CATEGORY_NAME}</h4>
+</div>
+
+
+//table 
+
+<table class="table table-striped table-hover ">
+<thead>
+<tr>
+<th>NAME</th>
+<th>EXPOSED AS</th>
+<th>MAPPED AS</th>
+<th>ATTRIBUTES</th>
+</tr>
+</thead>
+<tbody>
+{$TABLE_ROW}
+</tbody>
+</table> 
+
+//table row
+<tr>
+<td>{$PORT_NAME</td>
+<td>{$PORT_EXPOSED_AS}</td>
+<td>{$PORT_MAPPED_AS}</td>
+<td>{$PORT_ATTRIBUTES}</td>
+</tr>
+
+
+
+
+
+
+
+<div class="spacer30"></div>
+
+
+
