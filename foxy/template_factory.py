@@ -5,21 +5,21 @@ import constants
 
 
 def get_container_panel_template():
-	return '''<div class="panel {$PANEL_TYPE} panel-fluid"> {$CONTAINER_PANEL_CONTENTS} </div>'''
+	return '''<div class="panel $PANEL_TYPE panel-fluid"> $CONTAINER_PANEL_CONTENTS </div>'''
 
 
 def get_container_panel_contents_template():
     return   '''<div class="panel-heading">
-                    <h3>{$CONTAINER_ID}</h3>
+                    <h3>$CONTAINER_ID</h3>
                 </div> 
                 <div class="panel-body">
                     <ul class="nav nav-pills">
                         <li class="active"><a href="#ports" data-toggle="tab" aria-expanded="true">ports</a></li>
                         <li class=""><a href="#info" data-toggle="tab" aria-expanded="false">info</a></li> 
-                        <a href="#" class="btn {$BUTTON_TYPE} pull-right">{$BUTTON_LABEL} Container</a>
+                        <a href="#" class="btn $BUTTON_TYPE pull-right">$BUTTON_LABEL Container</a>
                     </ul>
                     <div class="tab-content"> 
-                        ${TAB_CONTENT}
+                        $TAB_CONTENT
                     </div>                 
                 </div>
                 <div class="spacer50"></div> '''  
@@ -27,9 +27,9 @@ def get_container_panel_contents_template():
 def get_container_tab_content_template():
     return   '''<div id="ports" class="tab-pane fade in active">
                     <div class="page-header">
-                        <h4 id="{$CATEGORY_NAME}@{$CONTAINER_ID}">{$CATEGORY_NAME}</h4>
+                        <h4 id="$CATEGORY_NAME@$CONTAINER_ID">$CATEGORY_NAME</h4>
                     </div>
-                    {$TABLES}
+                    $TABLES
                 </div>
                 <div id="info" class="tab-pane fade">
                     <script>
@@ -69,6 +69,33 @@ def get_container_port_category_table(category, portDict, portToDataDict):
 
 
 
+
+def get_container_port_category_table_template():
+	return """  <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>EXPOSED AS</th>       
+                            <th>MAPPED AS</th>
+                            <th>ATTRIBUTES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        $TABLE_ROWS
+                    </tbody>
+                </table> """
+
+
+
+
+def get_container_port_category_table_row(port, portToDataDict):
+	row = get_container_port_category_table_row_template(port, portToDataDict)
+	attributes = portToDataDict[FOXY_PORT_ATTRIBUTE_KEY]
+	html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
+	row.substitute(ATTRIBUTES = html_a_fied_attributes)
+	return row
+
+
 def get_container_port_category_table_row_template(port, portToDataDict):
     return   """<tr>
                 <td>""" + portToDataDict[port][constants.FOXY_PORT_NAME_KEY] + """</td>
@@ -76,8 +103,10 @@ def get_container_port_category_table_row_template(port, portToDataDict):
                 <td>""" + portToDataDict[port][DOCKER_PORTS_HOST_IP_KEY] + 
                              """ : """ + 
                              portToDataDict[port][DOCKER_PORTS_HOST_PORT_KEY] + """</td>
-                <td>""" + {$ATTRIBUTES} + """</td>
+                <td>""" + $ATTRIBUTES + """</td>
                 </tr>"""
+
+
 
 
 
@@ -93,6 +122,8 @@ def get_container_port_category_table_row_attributes(attributes):
 			returnVal = returnVal + """<span class="label label-lg label-default">"""
 			                      + attribute 
 			                      + """Default</span>"""
+
+    return returnVal
 
 
 
