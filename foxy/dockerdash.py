@@ -217,8 +217,9 @@ def get_category_to_ports_dict(containerName, foxyDataDict):
 
         if foxyDataDict[containerName][foxyKey]:
             group = foxyDataDict[containerName][foxyKey]
+            #group = str(group)
 
-            if categoryToPortsDict[group]:
+            if group in categoryToPortsDict:
                 categoryToPortsDict[group].append(exposedPort)
             else:
                 categoryToPortsDict[group] = [exposedPort]

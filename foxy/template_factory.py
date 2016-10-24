@@ -5,14 +5,17 @@ import string
 
 
 def get_container_panel_template():
-    return string.Template('''<div class="panel $PANEL_TYPE panel-fluid"> $CONTAINER_PANEL_CONTENTS </div>''')
+    return string.Template('''. <div class="panel $PANEL_TYPE panel-fluid"> 
+                                    $CONTAINER_PANEL_CONTENTS 
+                                </div>
+                                <div class="spacer50"></div>''')
 
 
 def get_container_panel(panelType, containerName, categoryToPortsDict, portToDataDict, containerInfo):
     
     buttonType = ""
     buttonLabel = ""
-    print type(containerInfo[containerName])
+    
     if containerInfo[containerName]['State']['Running'] == True:
         buttonType = "btn-danger"
         buttonLabel = "Stop"
@@ -33,7 +36,7 @@ def get_container_panel(panelType, containerName, categoryToPortsDict, portToDat
 
 
 
-def get_container_panel_contents_template():
+def get_container_panel_content_template():
     return string.Template(
              '''<div class="panel-heading">
                     <h3>$CONTAINER_NAME</h3>
@@ -47,15 +50,14 @@ def get_container_panel_contents_template():
                     <div class="tab-content"> 
                         $TAB_CONTENT
                     </div>                 
-                </div>
-                <div class="spacer50"></div> ''')
+                </div>''')
 
 
 
 
 def get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict, buttonType, buttonLabel):
-    containerPanelContentTemplate = get_container_tab_content_template()
-    containerPanelTabContent = get_container_tab_content()
+    containerPanelContentTemplate = get_container_panel_content_template()
+    containerPanelTabContent = get_container_tab_content(containerName, categoryToPortsDict, portToDataDict)
 
     containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, 
                                                                      TAB_CONTENT = containerPanelTabContent,
@@ -75,7 +77,7 @@ def get_container_tab_content_template():
                     <script>
                         var json = (function() {
                             var json = null;
-                            $.ajax({
+                            $$.ajax({
                                 'async': false,
                                 'global': false,
                                 'url': "$CONTAINER_INFO_URL",
@@ -87,7 +89,7 @@ def get_container_tab_content_template():
                         return json;
                         })();
 
-                        $('#info').jsonView(json)
+                        $$('#info').jsonView(json)
                     </script>
                 </div> ''')                  
   
@@ -109,7 +111,7 @@ def get_container_tab_content(containerName, categoryToPortsDict, portToDataDict
 def get_container_port_tables(categoryToPortsDict, portToDataDict):
     returnVal = ""
 
-    for category, portDict in categoryToPortDict.itritems:
+    for category, portDict in categoryToPortsDict.iteritems():
         portCategoryTable = get_container_port_category_table(category, portDict, portToDataDict)
         returnVal = returnVal + portCategoryTable
 
@@ -120,7 +122,7 @@ def get_container_port_tables(categoryToPortsDict, portToDataDict):
 def get_container_port_category_table(category, portDict, portToDataDict):
     rows = ""
     for port in portDict:
-        row = row + get_container_port_category_table_row(port, portToDataDict)
+        rows = rows + get_container_port_category_table_row(port, portToDataDict)
     
     tableTemplate = get_container_port_category_table_template()
     table = tableTemplate.substitute(TABLE_ROWS = rows, CATEGORY_NAME = category)
@@ -160,6 +162,7 @@ def get_container_port_category_table_row(port, portToDataDict):
 
 
 def get_container_port_category_table_row_template(port, portToDataDict):
+    print portToDataDict
     return string.Template(
              """<tr>
                 <td>""" + portToDataDict[port][constants.FOXY_PORT_NAME_KEY] + """</td>
