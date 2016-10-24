@@ -141,8 +141,9 @@ def get_container_info_dict(containerNames):
     for containerName in containerNames:
         output = subprocess.Popen(["docker", "inspect", "--format='{{json .}}'", containerName],
             stdout=subprocess.PIPE).communicate()[0]
-        containerInfoDict[containerName]= output
 
+        containerInfoDict[containerName]= json.loads(output)
+    
     return containerInfoDict
 
 
@@ -152,10 +153,10 @@ def get_foxydata_dict(containerInfoDict):
     """
     """    
     foxyDataDict = dict()
-    for key, value in containerInfoDict.iteritems():
+    for key, valueDict in containerInfoDict.iteritems():
 
         logging.info("container is: %s"  % (key) )
-        valueDict = json.loads(value)
+        #valueDict = json.loads(value)
         metaDataDict = valueDict['Config']['Labels']
         
         portsDict = dict()
@@ -183,19 +184,60 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 
+
+
 def make_foxy_files(containerInfoDict, foxyDataDict):
-    serializeInnerDictAsJSON('info', containerInfoDict)
-    serializeInnerDictAsJSON('foxydata', foxyDataDict)
+    serialize_inner_dict_as_json('info', containerInfoDict)
+    serialize_inner_dict_as_json('foxydata', foxyDataDict)
+
+    for k, v in containerInfoDict.iteritems():
+        panelType = "panel-info"
+        containerName = k
+        categoryToPortsDict = get_category_to_ports_dict(containerName, foxyDataDict)
+
+        c = template_factory.get_container_panel(panelType, 
+                                                 containerName, 
+                                                 categoryToPortsDict, 
+                                                 foxyDataDict, 
+                                                 containerInfoDict)
+        print c
+
+
+
+
+
+def get_category_to_ports_dict(containerName, foxyDataDict):
+    containerFoxyDataDict = foxyDataDict[containerName]
+    containerPortsDict = containerFoxyDataDict[constants.DOCKER_PORT_KEY]
+
+    categoryToPortsDict = dict()
+    for k, v in containerPortsDict.iteritems():
+        exposedPort = k.replace(constants.DOCKER_PORTS_VALUE_SUFFIX, '')
+        foxyKey = exposedPort + ".group"
+
+        if foxyDataDict[containerName][foxyKey]:
+            group = foxyDataDict[containerName][foxyKey]
+
+            if categoryToPortsDict[group]:
+                categoryToPortsDict[group].append(exposedPort)
+            else:
+                categoryToPortsDict[group] = [exposedPort]
+
+    return categoryToPortsDict
+
+
 
 
 # assumes dicts of dicts!
-def serializeInnerDictAsJSON(filenameSuffix, dictionary):
+def serialize_inner_dict_as_json(filenameSuffix, dictionary):
     
     for k, v in dictionary.iteritems():
         filename = k + "_" + filenameSuffix + ".json"
         
         with io.open("./json/" + filename, 'w', encoding="utf-8") as outfile:
             outfile.write(unicode(v))
+
+
 
 
 

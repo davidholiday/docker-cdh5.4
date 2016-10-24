@@ -8,10 +8,27 @@ def get_container_panel_template():
     return string.Template('''<div class="panel $PANEL_TYPE panel-fluid"> $CONTAINER_PANEL_CONTENTS </div>''')
 
 
-def get_container_panel(containerName, categoryToPortsDict, portToDataDict):
+def get_container_panel(panelType, containerName, categoryToPortsDict, portToDataDict, containerInfo):
+    
+    buttonType = ""
+    buttonLabel = ""
+    print type(containerInfo[containerName])
+    if containerInfo[containerName]['State']['Running'] == True:
+        buttonType = "btn-danger"
+        buttonLabel = "Stop"
+    else:
+        buttonType = "btn-success"
+        buttonLabel = "Start" 
+
+    containerPanelContents = get_container_panel_contents(containerName, 
+                                                          categoryToPortsDict, 
+                                                          portToDataDict,
+                                                          buttonType,
+                                                          buttonLabel)
+
     containerPanelTemplate = get_container_panel_template()
-    containerPanelContents = get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict)
-    containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_CONTENTS = containerPanelContents)
+    containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_CONTENTS = containerPanelContents,
+                                                       PANEL_TYPE = panelType)
     return containerPanel
 
 
@@ -33,12 +50,21 @@ def get_container_panel_contents_template():
                 </div>
                 <div class="spacer50"></div> ''')
 
-def get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict):
+
+
+
+def get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict, buttonType, buttonLabel):
     containerPanelContentTemplate = get_container_tab_content_template()
     containerPanelTabContent = get_container_tab_content()
 
-    containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, TAB_CONTENT = containerPanelTabContent)
+    containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, 
+                                                                     TAB_CONTENT = containerPanelTabContent,
+                                                                     BUTTON_TYPE = buttonType,
+                                                                     BUTTON_LABEL = buttonLabel)
     return containerPanelContent
+
+
+
 
 def get_container_tab_content_template():
     return string.Template(
