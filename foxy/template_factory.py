@@ -5,20 +5,20 @@ import string
 
 
 def get_container_panel_template():
-	return string.Template('''<div class="panel $PANEL_TYPE panel-fluid"> $CONTAINER_PANEL_CONTENTS </div>''')
+    return string.Template('''<div class="panel $PANEL_TYPE panel-fluid"> $CONTAINER_PANEL_CONTENTS </div>''')
 
 
 def get_container_panel(containerName, categoryToPortsDict, portToDataDict):
-	containerPanelTemplate = get_container_panel_template()
-	containerPanelContents = get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict)
-	containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_CONTENTS = containerPanelContents)
-	return containerPanel
+    containerPanelTemplate = get_container_panel_template()
+    containerPanelContents = get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict)
+    containerPanel = containerPanelTemplate.substitute(CONTAINER_PANEL_CONTENTS = containerPanelContents)
+    return containerPanel
 
 
 
 def get_container_panel_contents_template():
     return string.Template(
-    	     '''<div class="panel-heading">
+             '''<div class="panel-heading">
                     <h3>$CONTAINER_NAME</h3>
                 </div> 
                 <div class="panel-body">
@@ -31,25 +31,18 @@ def get_container_panel_contents_template():
                         $TAB_CONTENT
                     </div>                 
                 </div>
-                <div class="spacer50"></div> '''  
-
-
-
+                <div class="spacer50"></div> ''')
 
 def get_container_panel_contents(containerName, categoryToPortsDict, portToDataDict):
-	containerPanelContentTemplate = get_container_tab_content_template()
-	containerPanelTabContent = get_container_tab_content
+    containerPanelContentTemplate = get_container_tab_content_template()
+    containerPanelTabContent = get_container_tab_content()
 
-	containerPanelContent = containerPanelContentTemplate.substitute(
-		CONTAINER_NAME = containerName, TAB_CONTENT = containerPanelTabContent)
-    
+    containerPanelContent = containerPanelContentTemplate.substitute(CONTAINER_NAME = containerName, TAB_CONTENT = containerPanelTabContent)
     return containerPanelContent
-
-
 
 def get_container_tab_content_template():
     return string.Template(
-    	     '''<div id="ports" class="tab-pane fade in active">
+             '''<div id="ports" class="tab-pane fade in active">
                     $TABLES
                 </div>
                 <div id="info" class="tab-pane fade">
@@ -80,8 +73,8 @@ def get_container_tab_content_template():
 def get_container_tab_content(containerName, categoryToPortsDict, portToDataDict):
     tables = get_container_port_tables(categoryToPortsDict, portToDataDict)
     containerInfoURL = "./json/" + containerName + "_info.json"
-	tab_content_template = get_container_tab_content_template()
-	tab_content = tab_content_template.substitute(TABLES = tables, CONTAINER_INFO_URL = containerInfoURL)
+    tab_content_template = get_container_tab_content_template()
+    tab_content = tab_content_template.substitute(TABLES = tables, CONTAINER_INFO_URL = containerInfoURL)
 
 
 
@@ -91,10 +84,10 @@ def get_container_port_tables(categoryToPortsDict, portToDataDict):
     returnVal = ""
 
     for category, portDict in categoryToPortDict.itritems:
-    	portCategoryTable = get_container_port_category_table(category, portDict, portToDataDict)
+        portCategoryTable = get_container_port_category_table(category, portDict, portToDataDict)
         returnVal = returnVal + portCategoryTable
 
-	return returnVal
+    return returnVal
 
 
 
@@ -102,20 +95,20 @@ def get_container_port_category_table(category, portDict, portToDataDict):
     rows = ""
     for port in portDict:
         row = row + get_container_port_category_table_row(port, portToDataDict)
-	
+    
     tableTemplate = get_container_port_category_table_template()
     table = tableTemplate.substitute(TABLE_ROWS = rows, CATEGORY_NAME = category)
-	return table
+    return table
 
 
 
 
 def get_container_port_category_table_template():
-	return string.Template(
-	        """ <div class="page-header">
+    return string.Template(
+            """ <div class="page-header">
                     <h4 id="$CATEGORY_NAME>$CATEGORY_NAME</h4>
                 </div>  
-	            <table class="table table-striped table-hover ">
+                <table class="table table-striped table-hover ">
                     <thead>
                         <tr>
                             <th>NAME</th>
@@ -133,23 +126,22 @@ def get_container_port_category_table_template():
 
 
 def get_container_port_category_table_row(port, portToDataDict):
-	row_template = get_container_port_category_table_row_template(port, portToDataDict)
-	attributes = portToDataDict[FOXY_PORT_ATTRIBUTE_KEY]
-	html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
-	row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
-	return row
+    row_template = get_container_port_category_table_row_template(port, portToDataDict)
+    attributes = portToDataDict[FOXY_PORT_ATTRIBUTE_KEY]
+    html_a_fied_attributes = get_container_port_category_table_row_attributes(attributes)
+    row = row_template.substitute(ATTRIBUTES = html_a_fied_attributes)
+    return row
 
 
 def get_container_port_category_table_row_template(port, portToDataDict):
     return string.Template(
-    	     """<tr>
+             """<tr>
                 <td>""" + portToDataDict[port][constants.FOXY_PORT_NAME_KEY] + """</td>
                 <td>""" + port + """</td>
                 <td>""" + portToDataDict[port][DOCKER_PORTS_HOST_IP_KEY] + 
                              """ : """ + 
                              portToDataDict[port][DOCKER_PORTS_HOST_PORT_KEY] + """</td>
-                <td>""" + $ATTRIBUTES + """</td>
-                </tr>""")
+                <td>$ATTRIBUTES /td></tr>""")
 
 
 
@@ -158,15 +150,15 @@ def get_container_port_category_table_row_template(port, portToDataDict):
 def get_container_port_category_table_row_attributes(attributes):
     
     returnVal = ""
-	for attribute in attributes:
-		if (attribute == FOXY_WEB_ATTRIBUTE):
-			returnVal = returnVal + """<span class="button button-lg button-default">"""
-			                      + attribute 
-			                      + """Default</span>"""
-		else: 
-			returnVal = returnVal + """<span class="label label-lg label-default">"""
-			                      + attribute 
-			                      + """Default</span>"""
+    for attribute in attributes:
+        if (attribute == FOXY_WEB_ATTRIBUTE):
+            returnVal = returnVal + """<span class="button button-lg button-default">""" + \
+                                  attribute + \
+                                  """Default</span>"""
+        else: 
+            returnVal = returnVal + """<span class="label label-lg label-default">""" + \
+                                  attribute + \
+                                  """Default</span>"""
 
     return returnVal
 

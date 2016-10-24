@@ -10,6 +10,8 @@ import socket
 
 import constants
 
+import template_factory
+
 
 # TODO ** start/stop containers from foxy
 #      ** have foxy periodically wake up and check for changes as part of the refresh cycle
@@ -49,9 +51,9 @@ def main():
     containerNames = get_container_names(parsedArgsDict)
     containerInfoDict = get_container_info_dict(containerNames)
     foxyDataDict = get_foxydata_dict(containerInfoDict)
-    foxydata_to_html(foxydataDict)
-    serialize_foxydata(foxydataDict)
 
+    #serialize_foxydata(foxydataDict)
+    #foxydata_to_html(foxydataDict)
 
 
 def setup_logging():
@@ -182,9 +184,7 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 def foxydata_to_html(foxydataDict):
-    """
-    """
-    print()
+    return template_factory.get_container_panel(containerName, categoryToPortsDict, portToDataDict)
 
     
 
