@@ -195,18 +195,36 @@ def make_foxy_files(containerInfoDict, foxyDataDict):
     serialize_inner_dict_as_json('info', containerInfoDict)
     serialize_inner_dict_as_json('foxydata', foxyDataDict)
 
+    foxyColorIndex = 0
+    containerPanels = []
     for k, v in containerInfoDict.iteritems():
-        panelType = "panel-info"
+
+        if v['State']['Running'] == False:
+            panelType = "panel-default"
+        else:
+            panelType = "panel-info"
+            #panelType = constants.FOXY_PANEL_COLOR_LIST[foxyColorIndex]
+            #
+            #foxyColorIndex = (foxyColorIndex + 1) \
+            #    if (foxyColorIndex + 1 < len(constants.FOXY_PANEL_COLOR_LIST)) \
+            #        else (0)
+
         containerName = k
         categoryToPortsDict = get_category_to_ports_dict(containerName, foxyDataDict)
         #portToDataDict = foxyDataDict[containerName][constants.DOCKER_PORT_KEY]
 
-        c = template_factory.get_container_panel(panelType, 
-                                                 containerName, 
-                                                 categoryToPortsDict, 
-                                                 foxyDataDict, 
-                                                 containerInfoDict)
-        print c
+        containerPanel = template_factory.get_container_panel(panelType, 
+                                                              containerName, 
+                                                              categoryToPortsDict, 
+                                                              foxyDataDict, 
+                                                              containerInfoDict)
+        containerPanels.append(containerPanel)
+
+    page = template_factory.get_page(containerPanels)
+    f = open('index_generated.html', 'w')
+    f.write(page)
+    f.close()
+
 
 
 
@@ -221,7 +239,7 @@ def get_category_to_ports_dict(containerName, foxyDataDict):
         exposedPort = k.replace(constants.DOCKER_PORTS_VALUE_SUFFIX, '')
         foxyKey = exposedPort + ".group"
 
-        if foxyDataDict[containerName][foxyKey]:
+        if foxyKey in foxyDataDict[containerName]:
             group = foxyDataDict[containerName][foxyKey]
             #group = str(group)
 

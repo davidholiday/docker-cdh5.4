@@ -17,3 +17,5 @@ FOXY_PORT_GROUP_KEY = "group"
 FOXY_PORT_ATTRIBUTE_KEY = "attribute"
 
 FOXY_WEB_ATTRIBUTE = "web"
+
+FOXY_PANEL_COLOR_LIST = ["panel-success", "panel-info", "panel-warning", "panel-danger"]
