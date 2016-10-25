@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>foxy</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/Static/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="/Static/css/jquery.json-view.min.css">
+        <link rel="stylesheet" href="/Static/css/foxy_custom.css" type="text/css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/Static/js/jquery.json-view.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <!-- nav bar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="container-fluid">
+                <a href="#" class="navbar-left"><img src="./Static/images/cf_logo_smallest.png"></a>
+                
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">&nbsp FOXY</a>              
+                </div>
+        
+                <div class="collapse navbar-collapse" >
+
+                    <!-- search bar -->
+                    <!--
+                    <form class="navbar-form navbar-center" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    -->
+
+                    <!-- right-side buttons -->
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">CONTAINERS <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                
+<li><a href="#tx_panel">tx</a></li>
+
+<li><a href="#t1_panel">t1</a></li>
+
+<li><a href="#roots_derriere_panel">roots_derriere</a></li>
+
+<li><a href="#foxy_test_panel">foxy_test</a></li>
+
+<li><a href="#caochong-ambari-1_panel">caochong-ambari-1</a></li>
+
+<li><a href="#caochong-ambari-0_panel">caochong-ambari-0</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li><a href="#">HELP</a></li>
+                    </ul>
+                </div>
+
+           </div>
+        </nav>
+
+
+        <div class="content-container">       
+             
+<div class="anchor" id="tx_panel">      
+<div class="panel panel-default panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>tx</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#tx_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#tx_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-success pull-right">Start Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="tx_ports" class="tab-pane fade in active">
+    
+</div>
+<div id="tx_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/tx_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#tx_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="t1_panel">      
+<div class="panel panel-default panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>t1</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#t1_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#t1_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-success pull-right">Start Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="t1_ports" class="tab-pane fade in active">
+    
+</div>
+<div id="t1_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/t1_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#t1_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="roots_derriere_panel">      
+<div class="panel panel-info panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>roots_derriere</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#roots_derriere_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#roots_derriere_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-danger pull-right">Stop Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="roots_derriere_ports" class="tab-pane fade in active">
+    
+</div>
+<div id="roots_derriere_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/roots_derriere_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#roots_derriere_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="foxy_test_panel">      
+<div class="panel panel-info panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>foxy_test</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#foxy_test_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#foxy_test_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-danger pull-right">Stop Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="foxy_test_ports" class="tab-pane fade in active">
+    
+<div class="page-header">
+    <h4 id="Hue">Hue</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Server</td>
+    <td>8888/tcp</td>
+    <td>0.0.0.0 : 32774</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="jupyter">jupyter</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>notebook</td>
+    <td>6666/tcp</td>
+    <td>0.0.0.0 : 32779</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32779 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="HDFS">HDFS</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>NameNode HTTPS UI</td>
+    <td>50470/tcp</td>
+    <td>0.0.0.0 : 32768</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32768 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>DataNode UI</td>
+    <td>50075/tcp</td>
+    <td>0.0.0.0 : 32769</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32769 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>NameNode</td>
+    <td>8020/tcp</td>
+    <td>0.0.0.0 : 32778</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="ZooKeeper">ZooKeeper</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>ZooKeeper Client</td>
+    <td>2181/tcp</td>
+    <td>0.0.0.0 : 32781</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32781 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Hadoop">Hadoop</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>MapReduce JobHistory UI</td>
+    <td>19888/tcp</td>
+    <td>0.0.0.0 : 32770</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32770 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Yarn">Yarn</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Node Manager Localizer</td>
+    <td>8040/tcp</td>
+    <td>0.0.0.0 : 32777</td>
+    <td> </td></tr>
+<tr>
+    <td>Node Manager</td>
+    <td>8042/tcp</td>
+    <td>0.0.0.0 : 32776</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32776 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>Resource Manager UI</td>
+    <td>8088/tcp</td>
+    <td>0.0.0.0 : 32775</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32775 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Other">Other</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>ssh</td>
+    <td>22/tcp</td>
+    <td>0.0.0.0 : 32782</td>
+    <td> </td></tr>
+<tr>
+    <td>Dogtag Port</td>
+    <td>11443/tcp</td>
+    <td>0.0.0.0 : 32771</td>
+    <td> </td></tr>
+<tr>
+    <td>Linux Cockpit (todo)</td>
+    <td>9090/tcp</td>
+    <td>0.0.0.0 : 32773</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Oozie">Oozie</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Server HTTP interface</td>
+    <td>11000/tcp</td>
+    <td>0.0.0.0 : 32772</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Spark">Spark</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Local Client Driver HTTP UI</td>
+    <td>4040/tcp</td>
+    <td>0.0.0.0 : 32780</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32780 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+</div>
+<div id="foxy_test_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/foxy_test_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#foxy_test_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="caochong-ambari-1_panel">      
+<div class="panel panel-default panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>caochong-ambari-1</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#caochong-ambari-1_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#caochong-ambari-1_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-success pull-right">Start Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="caochong-ambari-1_ports" class="tab-pane fade in active">
+    
+</div>
+<div id="caochong-ambari-1_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/caochong-ambari-1_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#caochong-ambari-1_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+ 
+<div class="anchor" id="caochong-ambari-0_panel">      
+<div class="panel panel-default panel-fluid"> 
+    
+<div class="panel-heading">
+    <h4>caochong-ambari-0</h4>
+</div> 
+ <div class="panel-body">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#caochong-ambari-0_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
+        <li class=""><a href="#caochong-ambari-0_info" data-toggle="tab" aria-expanded="false">info</a></li> 
+        <a href="#" class="btn btn-success pull-right">Start Container</a>
+    </ul>
+    <div class="tab-content"> 
+        
+<div id="caochong-ambari-0_ports" class="tab-pane fade in active">
+    
+</div>
+<div id="caochong-ambari-0_info" class="tab-pane fade">
+    <script>
+        var json = (function() {
+            var json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': "./Data/json/caochong-ambari-0_info.json",
+                'dataType': "json",
+                'success': function (data) {
+                json = data;
+                }
+            });
+            return json;
+            })();
+
+        $('#caochong-ambari-0_info').jsonView(json);
+    </script>
+</div> 
+    </div>                 
+</div> 
+</div>
+</div>
+<!--<div class="spacer50"></div>-->
+        </div>
+
+        <!-- put some space at the footer so we can scroll the last panel to the top of the screen -->
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
+        <div class="spacer200"></div>
+        <div class="spacer75"></div>
+    </body>
+
+</html>
+
+        

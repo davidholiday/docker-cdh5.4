@@ -9,6 +9,7 @@ import socket
 import io
 import constants
 import html_generator
+import os
 
 
 
@@ -17,6 +18,12 @@ import html_generator
 driver for the foxy web app. main() querries current state of docker and builds the 
 appropriate json and html files to render that information in the application.
 '''
+
+
+
+
+def generate_app():
+    main()
 
 
 
@@ -202,7 +209,7 @@ def make_foxy_files(containerInfoDict, foxyDataDict):
         containerPanels.append(containerPanel)
 
     page = html_generator.get_page(containerInfoDict, containerPanels)
-    f = open('index_generated.html', 'w')
+    f = open('./Static/index.html', 'w')
     f.write(page)
     f.close()
 
@@ -238,7 +245,8 @@ def serialize_inner_dict_as_json(filenameSuffix, dictionary):
     for k, v in dictionary.iteritems():
         filename = k + "_" + filenameSuffix + ".json"
         v_asJSON = json.dumps(v, ensure_ascii=False)
-        with io.open("./json/" + filename, 'w', encoding="utf-8") as outfile:
+        dataDirectory = os.getcwd() + constants.RELATIVE_PATH_TO_JSON
+        with io.open(dataDirectory + filename, 'w', encoding="utf-8") as outfile:
             outfile.write(unicode(v_asJSON))
 
 

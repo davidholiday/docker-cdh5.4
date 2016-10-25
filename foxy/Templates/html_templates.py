@@ -1,4 +1,8 @@
 import string
+
+import sys
+import os
+sys.path.insert(0, os.getcwd() + '/Web')
 import constants
 
 
@@ -157,7 +161,7 @@ def get_container_tab_content_template():
             return json;
             })();
 
-        $$('#$INFO_DIV_ID').jsonView(json, { collapsed: true } );
+        $$('#$INFO_DIV_ID').jsonView(json, { 'collapsed: true' } );
     </script>
 </div> """)   
 

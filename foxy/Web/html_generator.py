@@ -1,6 +1,11 @@
 import constants
-import templates
 import json
+
+import sys
+import os
+sys.path.insert(0, os.getcwd() + '/Templates')
+import templates
+
 
 
 '''
@@ -87,7 +92,7 @@ def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDic
 
 def get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict):
     tables = get_container_port_tables(containerName, categoryToPortsDict, foxyDataDict)
-    containerInfoURL = "./json/" + containerName + "_info.json"
+    containerInfoURL = "./Data/json/" + containerName + "_info.json"
     tab_content_template = templates.get_container_tab_content_template()
 
     portsDivID = containerName + "_ports"
