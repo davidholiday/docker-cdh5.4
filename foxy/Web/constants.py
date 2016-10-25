@@ -25,3 +25,4 @@ RELATIVE_PATH_TO_JSON = '/Data/json/'
 
 FILE_AND_DIV_PORTS_SUFFIX = "_ports"
 FILE_AND_DIV_INFO_SUFFIX = "_info"
+PANEL_DIV_ID_SUFFIX = "_panel"

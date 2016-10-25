@@ -4,6 +4,7 @@ import cherrypy
 import foxy
 import os
 import subprocess
+import constants
 
 
 
@@ -21,7 +22,7 @@ class Foxy(object):
     @cherrypy.expose
     def start(self, container):
         output = subprocess.Popen(["docker", "start", container], stdout=subprocess.PIPE).communicate()[0]
-        raise cherrypy.HTTPRedirect("/")
+        raise cherrypy.HTTPRedirect("/#" + container + constants.PANEL_DIV_ID_SUFFIX)
 
 
 
@@ -29,7 +30,7 @@ class Foxy(object):
     @cherrypy.expose
     def stop(self, container):
         output = subprocess.Popen(["docker", "stop", container], stdout=subprocess.PIPE).communicate()[0]
-        raise cherrypy.HTTPRedirect("/")
+        raise cherrypy.HTTPRedirect("/#" + container + constants.PANEL_DIV_ID_SUFFIX)
 
 
 
