@@ -32,7 +32,7 @@ def get_page_template():
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/Static/js/jquery.json-view.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
     </head>
 
@@ -112,9 +112,9 @@ def get_dropdown_item_template():
 def get_container_panel_template():
     return string.Template(""" 
 <div class="anchor" id="$CONTAINER_PANEL_NAME">      
-<div class="panel $PANEL_TYPE panel-fluid"> 
-    $CONTAINER_PANEL_CONTENTS 
-</div>
+    <div class="panel $PANEL_TYPE panel-fluid"> 
+        $CONTAINER_PANEL_CONTENTS 
+    </div>
 </div>
 <!--<div class="spacer50"></div>-->""")
 
