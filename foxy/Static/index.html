@@ -89,7 +89,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#tx_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#tx_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-success pull-right">Start Container</a>
+        <a href="/start/?container=tx" class="btn btn-success pull-right">Start Container</a>
     </ul>
     <div class="tab-content"> 
         
@@ -131,7 +131,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#t1_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#t1_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-success pull-right">Start Container</a>
+        <a href="/start/?container=t1" class="btn btn-success pull-right">Start Container</a>
     </ul>
     <div class="tab-content"> 
         
@@ -164,7 +164,7 @@
 <!--<div class="spacer50"></div>-->
  
 <div class="anchor" id="roots_derriere_panel">      
-<div class="panel panel-info panel-fluid"> 
+<div class="panel panel-default panel-fluid"> 
     
 <div class="panel-heading">
     <h4>roots_derriere</h4>
@@ -173,7 +173,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#roots_derriere_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#roots_derriere_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-danger pull-right">Stop Container</a>
+        <a href="/start/?container=roots_derriere" class="btn btn-success pull-right">Start Container</a>
     </ul>
     <div class="tab-content"> 
         
@@ -215,7 +215,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#foxy_test_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#foxy_test_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-danger pull-right">Stop Container</a>
+        <a href="/stop/?container=foxy_test" class="btn btn-danger pull-right">Stop Container</a>
     </ul>
     <div class="tab-content"> 
         
@@ -238,7 +238,7 @@
 <tr>
     <td>Server</td>
     <td>8888/tcp</td>
-    <td>0.0.0.0 : 32774</td>
+    <td>0.0.0.0 : 32819</td>
     <td> </td></tr>
     </tbody>
 </table> 
@@ -260,8 +260,8 @@
 <tr>
     <td>notebook</td>
     <td>6666/tcp</td>
-    <td>0.0.0.0 : 32779</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32779 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32824</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32824 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -282,17 +282,17 @@
 <tr>
     <td>NameNode HTTPS UI</td>
     <td>50470/tcp</td>
-    <td>0.0.0.0 : 32768</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32768 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32813</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32813 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>DataNode UI</td>
     <td>50075/tcp</td>
-    <td>0.0.0.0 : 32769</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32769 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32814</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32814 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>NameNode</td>
     <td>8020/tcp</td>
-    <td>0.0.0.0 : 32778</td>
+    <td>0.0.0.0 : 32823</td>
     <td> </td></tr>
     </tbody>
 </table> 
@@ -314,8 +314,8 @@
 <tr>
     <td>ZooKeeper Client</td>
     <td>2181/tcp</td>
-    <td>0.0.0.0 : 32781</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32781 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32826</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32826 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -336,8 +336,8 @@
 <tr>
     <td>MapReduce JobHistory UI</td>
     <td>19888/tcp</td>
-    <td>0.0.0.0 : 32770</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32770 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32815</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32815 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -358,18 +358,18 @@
 <tr>
     <td>Node Manager Localizer</td>
     <td>8040/tcp</td>
-    <td>0.0.0.0 : 32777</td>
+    <td>0.0.0.0 : 32822</td>
     <td> </td></tr>
 <tr>
     <td>Node Manager</td>
     <td>8042/tcp</td>
-    <td>0.0.0.0 : 32776</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32776 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32821</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32821 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
 <tr>
     <td>Resource Manager UI</td>
     <td>8088/tcp</td>
-    <td>0.0.0.0 : 32775</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32775 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32820</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32820 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -390,17 +390,17 @@
 <tr>
     <td>ssh</td>
     <td>22/tcp</td>
-    <td>0.0.0.0 : 32782</td>
+    <td>0.0.0.0 : 32827</td>
     <td> </td></tr>
 <tr>
     <td>Dogtag Port</td>
     <td>11443/tcp</td>
-    <td>0.0.0.0 : 32771</td>
+    <td>0.0.0.0 : 32816</td>
     <td> </td></tr>
 <tr>
     <td>Linux Cockpit (todo)</td>
     <td>9090/tcp</td>
-    <td>0.0.0.0 : 32773</td>
+    <td>0.0.0.0 : 32818</td>
     <td> </td></tr>
     </tbody>
 </table> 
@@ -422,7 +422,7 @@
 <tr>
     <td>Server HTTP interface</td>
     <td>11000/tcp</td>
-    <td>0.0.0.0 : 32772</td>
+    <td>0.0.0.0 : 32817</td>
     <td> </td></tr>
     </tbody>
 </table> 
@@ -444,8 +444,8 @@
 <tr>
     <td>Local Client Driver HTTP UI</td>
     <td>4040/tcp</td>
-    <td>0.0.0.0 : 32780</td>
-    <td><a target="_blank" href=" http://0.0.0.0:32780 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    <td>0.0.0.0 : 32825</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32825 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
     </tbody>
 </table> 
 <div class="spacer50"></div>
@@ -485,7 +485,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#caochong-ambari-1_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#caochong-ambari-1_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-success pull-right">Start Container</a>
+        <a href="/start/?container=caochong-ambari-1" class="btn btn-success pull-right">Start Container</a>
     </ul>
     <div class="tab-content"> 
         
@@ -527,7 +527,7 @@
     <ul class="nav nav-pills">
         <li class="active"><a href="#caochong-ambari-0_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#caochong-ambari-0_info" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn btn-success pull-right">Start Container</a>
+        <a href="/start/?container=caochong-ambari-0" class="btn btn-success pull-right">Start Container</a>
     </ul>
     <div class="tab-content"> 
         

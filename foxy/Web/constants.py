@@ -22,3 +22,6 @@ FOXY_WEB_ATTRIBUTE = "web"
 FOXY_PANEL_COLOR_LIST = ["panel-success", "panel-info", "panel-warning", "panel-danger"]
 
 RELATIVE_PATH_TO_JSON = '/Data/json/'
+
+FILE_AND_DIV_PORTS_SUFFIX = "_ports"
+FILE_AND_DIV_INFO_SUFFIX = "_info"

@@ -130,7 +130,7 @@ def get_container_panel_content_template():
     <ul class="nav nav-pills">
         <li class="active"><a href="#$PORTS_DIV_ID" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#$INFO_DIV_ID" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="#" class="btn $BUTTON_TYPE pull-right">$BUTTON_LABEL Container</a>
+        <a href="$BUTTON_URL" class="btn $BUTTON_TYPE pull-right">$BUTTON_LABEL Container</a>
     </ul>
     <div class="tab-content"> 
         $TAB_CONTENT

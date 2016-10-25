@@ -52,15 +52,18 @@ def get_container_panel(panelType, containerName, categoryToPortsDict, foxyDataD
     if containerInfo[containerName]['State']['Running'] == True:
         buttonType = "btn-danger"
         buttonLabel = "Stop"
+        buttonURL = "/stop/?container=" + containerName 
     else:
         buttonType = "btn-success"
         buttonLabel = "Start" 
+        buttonURL = "/start/?container=" + containerName 
 
     containerPanelContents = get_container_panel_contents(containerName, 
                                                           categoryToPortsDict, 
                                                           foxyDataDict,
                                                           buttonType,
-                                                          buttonLabel)
+                                                          buttonLabel,
+                                                          buttonURL)
 
     containerPanelName = containerName + "_panel"
     containerPanelTemplate = templates.get_container_panel_template()
@@ -72,7 +75,13 @@ def get_container_panel(panelType, containerName, categoryToPortsDict, foxyDataD
 
 
 
-def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDict, buttonType, buttonLabel):
+def get_container_panel_contents(containerName, 
+                                 categoryToPortsDict, 
+                                 foxyDataDict, 
+                                 buttonType, 
+                                 buttonLabel, 
+                                 buttonURL):
+
     containerPanelContentTemplate = templates.get_container_panel_content_template()
     containerPanelTabContent = get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict)
 
@@ -83,6 +92,7 @@ def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDic
                                                                      TAB_CONTENT = containerPanelTabContent,
                                                                      BUTTON_TYPE = buttonType,
                                                                      BUTTON_LABEL = buttonLabel,
+                                                                     BUTTON_URL = buttonURL,
                                                                      PORTS_DIV_ID = portsDivID,
                                                                      INFO_DIV_ID = infoDivID)
     return containerPanelContent
@@ -92,11 +102,11 @@ def get_container_panel_contents(containerName, categoryToPortsDict, foxyDataDic
 
 def get_container_tab_content(containerName, categoryToPortsDict, foxyDataDict):
     tables = get_container_port_tables(containerName, categoryToPortsDict, foxyDataDict)
-    containerInfoURL = "./Data/json/" + containerName + "_info.json"
+    containerInfoURL = "." + constants.RELATIVE_PATH_TO_JSON + containerName + "_info.json"
     tab_content_template = templates.get_container_tab_content_template()
 
-    portsDivID = containerName + "_ports"
-    infoDivID = containerName + "_info"
+    portsDivID = containerName + constants.FILE_AND_DIV_PORTS_SUFFIX
+    infoDivID = containerName + constants.FILE_AND_DIV_INFO_SUFFIX
 
     tab_content = tab_content_template.substitute(TABLES = tables, 
                                                   CONTAINER_INFO_URL = containerInfoURL,
