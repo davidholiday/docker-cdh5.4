@@ -1,17 +1,23 @@
+
+
+
+
+
 .navbar-brand {
   font-size: 3em;
   line-height: 0.75em;
 }
 
+
 .navbar-left {
 	padding: 5px;
 }
 
-/* set a max-width for horizontal fluid layout and make it centered */
+
 .panel-fluid {
   margin-right: auto;
   margin-left: auto;
-  max-width: 950px; /* or 950px */
+  max-width: 950px; 
 }
 
 
@@ -24,10 +30,15 @@
 	padding-top: 50px; 
 }
 
+
 .content-container {
     margin-top: 100px;
 }
 
+
+.modal-center {
+    margin-top: 200px;
+}
 
 
 table
@@ -37,13 +48,6 @@ table
 }
 
 
-/*
-.table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #2b3e50
-}
-*/
-
-
 .json-view {
 	font-family: "Lucida Console";
     word-wrap: break-word;
@@ -51,19 +55,21 @@ table
 
 }
 
+
 .json-view .comments {
 	color: #ff00ff;
 }
+
 
 .json-view .bool, .json-view .null, .json-view .num, .json-view .undef {
     font-weight: 700;
     color: #ffff00
 }
 
+
 .json-view .str {
     color: #00ffff;
 }
-
 
 
 .navbar-center
@@ -75,6 +81,36 @@ table
     margin:0 auto;
     padding: 3px;
 }
+
+
+/* t/y John Slegers @ http://stackoverflow.com/a/35988890/2234770 */
+
+.progress {
+    margin: 15px;
+}
+
+.progress .progress-bar.active {
+    font-weight: 700;
+    animation: progress-bar-stripes .5s linear infinite;
+}
+
+.dotdotdot:after {
+    font-weight: 300;
+    content: '...';
+    display: inline-block;
+    width: 20px;
+    text-align: left;
+    animation: dotdotdot 1.5s linear infinite;
+}
+
+@keyframes dotdotdot {
+  0%   { content: '...'; }
+  25% { content: ''; }
+  50% { content: '.'; }
+  75% { content: '..'; }
+}
+
+/* ** */
 
 
 .spacer5 { height: 5px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }

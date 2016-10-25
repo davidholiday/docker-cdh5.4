@@ -126,7 +126,7 @@ def get_container_panel_content_template():
 <div class="panel-heading">
     <h4>$CONTAINER_NAME</h4>
 </div> 
- <div class="panel-body">
+<div class="panel-body">
     <ul class="nav nav-pills">
         <li class="active"><a href="#$PORTS_DIV_ID" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#$INFO_DIV_ID" data-toggle="tab" aria-expanded="false">info</a></li> 
@@ -141,31 +141,19 @@ def get_container_panel_content_template():
         <script>
             $$('#$CONTAINER_NAME$BUTTON_LABEL').on('click', function() {
 
+                <!-- t/y John Slegers @ http://stackoverflow.com/a/35988890/2234770 -->
+                var dialog = bootbox.dialog({
+                    className: 'modal-center',
+                    title: '<div class="text-center">stand by for awesome...</div>',
+                    message: '<div class="progress"> <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span>   </span></div></div>'
+                });
 
-var dialog = bootbox.dialog({
-    title: 'A custom dialog with init',
-    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
-});
-dialog.init(function(){
-setTimeout(function(){
-                var $$btn = $$(this);              
-                $$btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
-                window.location = "$BUTTON_URL";
-}, 3000);
-
-});
-
-
-
-
-
-
-
-
-
-                
-
-
+                dialog.init(function() {
+                    setTimeout(function(){
+                        var $$btn = $$(this);              
+                        window.location = "$BUTTON_URL";
+                    }, 1000);
+                }); 
             });
         </script>
     </ul>
