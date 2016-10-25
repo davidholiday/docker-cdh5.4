@@ -86,7 +86,6 @@ def get_page_template():
         <div class="content-container">       
             $CONTAINER_PANELS
         </div>
-
         <!-- put some space at the footer so we can scroll the last panel to the top of the screen -->
         <div class="spacer200"></div>
         <div class="spacer200"></div>
@@ -130,12 +129,30 @@ def get_container_panel_content_template():
     <ul class="nav nav-pills">
         <li class="active"><a href="#$PORTS_DIV_ID" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#$INFO_DIV_ID" data-toggle="tab" aria-expanded="false">info</a></li> 
-        <a href="$BUTTON_URL" class="btn $BUTTON_TYPE pull-right">$BUTTON_LABEL Container</a>
+        <!--
+        <a href="$BUTTON_URL" class="btn $BUTTON_TYPE pull-right">
+            $BUTTON_LABEL Container
+        </a>
+        -->
+        <button type="button" class="btn $BUTTON_TYPE pull-right" id="$CONTAINER_NAME$BUTTON_LABEL">
+            $BUTTON_LABEL Container
+        </button>
+        <script>
+            $$('#$CONTAINER_NAME$BUTTON_LABEL').on('click', function() {
+                var $$btn = $$(this);              
+                $$btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
+                window.location = "$BUTTON_URL";
+            });
+        </script>
+
+
     </ul>
     <div class="tab-content"> 
         $TAB_CONTENT
     </div>                 
-</div>""")
+</div>
+
+""")
 
 
 
@@ -153,6 +170,7 @@ def get_container_tab_content_template():
                 'async': false,
                 'global': false,
                 'url': "$CONTAINER_INFO_URL",
+                'cache': false,
                 'dataType': "json",
                 'success': function (data) {
                 json = data;

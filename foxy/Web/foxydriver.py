@@ -22,8 +22,6 @@ class Foxy(object):
     def start(self, container):
         output = subprocess.Popen(["docker", "start", container], stdout=subprocess.PIPE).communicate()[0]
         raise cherrypy.HTTPRedirect("/")
-        #foxy.generate_app()
-        #return file("./Static/index.html")
 
 
 
@@ -32,8 +30,7 @@ class Foxy(object):
     def stop(self, container):
         output = subprocess.Popen(["docker", "stop", container], stdout=subprocess.PIPE).communicate()[0]
         raise cherrypy.HTTPRedirect("/")
-        #foxy.generate_app()
-        #return file("./Static/index.html")
+
 
 
 
