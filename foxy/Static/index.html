@@ -14,6 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/Static/js/jquery.json-view.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"</script>
 
     </head>
 
@@ -99,9 +100,32 @@
         </button>
         <script>
             $('#txStart').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/start/?container=tx";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
@@ -157,9 +181,32 @@
         </button>
         <script>
             $('#t1Start').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/start/?container=t1";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
@@ -215,9 +262,32 @@
         </button>
         <script>
             $('#roots_derriereStop').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/stop/?container=roots_derriere";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
@@ -501,9 +571,32 @@
         </button>
         <script>
             $('#foxy_testStart').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/start/?container=foxy_test";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
@@ -559,9 +652,32 @@
         </button>
         <script>
             $('#caochong-ambari-1Start').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/start/?container=caochong-ambari-1";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
@@ -617,9 +733,32 @@
         </button>
         <script>
             $('#caochong-ambari-0Start').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "/start/?container=caochong-ambari-0";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>

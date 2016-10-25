@@ -32,6 +32,7 @@ def get_page_template():
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/Static/js/jquery.json-view.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"</script>
 
     </head>
 
@@ -139,9 +140,32 @@ def get_container_panel_content_template():
         </button>
         <script>
             $$('#$CONTAINER_NAME$BUTTON_LABEL').on('click', function() {
+
+
+var dialog = bootbox.dialog({
+    title: 'A custom dialog with init',
+    message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+});
+dialog.init(function(){
+setTimeout(function(){
                 var $$btn = $$(this);              
                 $$btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
                 window.location = "$BUTTON_URL";
+}, 3000);
+
+});
+
+
+
+
+
+
+
+
+
+                
+
+
             });
         </script>
     </ul>
