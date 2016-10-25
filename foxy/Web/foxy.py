@@ -154,7 +154,9 @@ def get_foxydata_dict(containerInfoDict):
 
         # because the vals are given to us as lists of dicts and we need them to be dicts
         for k, v in portsDict.iteritems():
-            portsDict[k] = v[0]
+            if v is not None:
+                print type(v)
+                portsDict[k] = v[0]
 
 
         foxyFilter = constants.TOP_LEVEL_METATDATA_FILTER

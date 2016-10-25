@@ -104,8 +104,6 @@
                 window.location = "/start/?container=tx";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
@@ -134,7 +132,6 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>
@@ -165,8 +162,6 @@
                 window.location = "/start/?container=t1";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
@@ -195,14 +190,13 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>
 <!--<div class="spacer50"></div>-->
  
 <div class="anchor" id="roots_derriere_panel">      
-<div class="panel panel-default panel-fluid"> 
+<div class="panel panel-info panel-fluid"> 
     
 <div class="panel-heading">
     <h4>roots_derriere</h4>
@@ -212,27 +206,253 @@
         <li class="active"><a href="#roots_derriere_ports" data-toggle="tab" aria-expanded="true">ports</a></li>
         <li class=""><a href="#roots_derriere_info" data-toggle="tab" aria-expanded="false">info</a></li> 
         <!--
-        <a href="/start/?container=roots_derriere" class="btn btn-success pull-right">
-            Start Container
+        <a href="/stop/?container=roots_derriere" class="btn btn-danger pull-right">
+            Stop Container
         </a>
         -->
-        <button type="button" class="btn btn-success pull-right" id="roots_derriereStart">
-            Start Container
+        <button type="button" class="btn btn-danger pull-right" id="roots_derriereStop">
+            Stop Container
         </button>
         <script>
-            $('#roots_derriereStart').on('click', function() {
+            $('#roots_derriereStop').on('click', function() {
                 var $btn = $(this);              
                 $btn.button('loading'); <!-- this bit, nor the animated glyphycons, seem to work :-/ -->
-                window.location = "/start/?container=roots_derriere";
+                window.location = "/stop/?container=roots_derriere";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
 <div id="roots_derriere_ports" class="tab-pane fade in active">
     
+<div class="page-header">
+    <h4 id="Hue">Hue</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Server</td>
+    <td>8888/tcp</td>
+    <td>0.0.0.0 : 32909</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="jupyter">jupyter</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>notebook</td>
+    <td>6666/tcp</td>
+    <td>0.0.0.0 : 32914</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32914 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="HDFS">HDFS</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>NameNode HTTPS UI</td>
+    <td>50470/tcp</td>
+    <td>0.0.0.0 : 32903</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32903 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>DataNode UI</td>
+    <td>50075/tcp</td>
+    <td>0.0.0.0 : 32904</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32904 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>NameNode</td>
+    <td>8020/tcp</td>
+    <td>0.0.0.0 : 32913</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="ZooKeeper">ZooKeeper</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>ZooKeeper Client</td>
+    <td>2181/tcp</td>
+    <td>0.0.0.0 : 32916</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Hadoop">Hadoop</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>MapReduce JobHistory UI</td>
+    <td>19888/tcp</td>
+    <td>0.0.0.0 : 32905</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32905 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Yarn">Yarn</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Node Manager Localizer</td>
+    <td>8040/tcp</td>
+    <td>0.0.0.0 : 32912</td>
+    <td> </td></tr>
+<tr>
+    <td>Node Manager</td>
+    <td>8042/tcp</td>
+    <td>0.0.0.0 : 32911</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32911 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+<tr>
+    <td>Resource Manager UI</td>
+    <td>8088/tcp</td>
+    <td>0.0.0.0 : 32910</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32910 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Other">Other</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>ssh</td>
+    <td>22/tcp</td>
+    <td>0.0.0.0 : 32917</td>
+    <td> </td></tr>
+<tr>
+    <td>Dogtag Port</td>
+    <td>11443/tcp</td>
+    <td>0.0.0.0 : 32906</td>
+    <td> </td></tr>
+<tr>
+    <td>Linux Cockpit (todo)</td>
+    <td>9090/tcp</td>
+    <td>0.0.0.0 : 32908</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Oozie">Oozie</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Server HTTP interface</td>
+    <td>11000/tcp</td>
+    <td>0.0.0.0 : 32907</td>
+    <td> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
+<div class="page-header">
+    <h4 id="Spark">Spark</h4>
+</div>  
+<table class="table table-striped table-hover ">
+    <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EXPOSED AS</th>       
+                <th>MAPPED AS</th>
+                <th>ATTRIBUTES</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+<tr>
+    <td>Local Client Driver HTTP UI</td>
+    <td>4040/tcp</td>
+    <td>0.0.0.0 : 32915</td>
+    <td><a target="_blank" href=" http://0.0.0.0:32915 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
+    </tbody>
+</table> 
+<div class="spacer50"></div>
 </div>
 <div id="roots_derriere_info" class="tab-pane fade">
     <script>
@@ -256,7 +476,6 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>
@@ -287,8 +506,6 @@
                 window.location = "/start/?container=foxy_test";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
@@ -317,7 +534,6 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>
@@ -348,8 +564,6 @@
                 window.location = "/start/?container=caochong-ambari-1";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
@@ -378,7 +592,6 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>
@@ -409,8 +622,6 @@
                 window.location = "/start/?container=caochong-ambari-0";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         
@@ -439,7 +650,6 @@
 </div> 
     </div>                 
 </div>
-
  
 </div>
 </div>

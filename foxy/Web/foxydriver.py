@@ -36,6 +36,8 @@ class Foxy(object):
 
 
 if __name__ == '__main__':
+    cherrypy.config.update({'server.socket_port': 1701})
+
     conf = {
         '/': {
             'tools.sessions.on': True,

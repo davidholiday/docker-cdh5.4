@@ -144,14 +144,11 @@ def get_container_panel_content_template():
                 window.location = "$BUTTON_URL";
             });
         </script>
-
-
     </ul>
     <div class="tab-content"> 
         $TAB_CONTENT
     </div>                 
 </div>
-
 """)
 
 
