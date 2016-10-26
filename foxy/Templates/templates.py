@@ -30,9 +30,24 @@ def get_page_template():
         <link rel="stylesheet" href="/Static/css/foxy_custom.css" type="text/css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/Static/js/jquery.json-view.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+        <script>
+            $$( function() {
+                var availableTags = [
+                "jupyter"
+                ];
+                $$( "#tags" ).autocomplete({
+                    source: availableTags
+                });
+            } );
+        </script>
+
+
+
 
     </head>
 
@@ -42,7 +57,7 @@ def get_page_template():
         <nav class="navbar navbar-inverse navbar-fixed-top">
 
             <div class="container-fluid">
-                <a href="#" class="navbar-left"><img src="./Static/images/cf_logo_smallest.png"></a>
+                
                 
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
@@ -51,20 +66,34 @@ def get_page_template():
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">&nbsp FOXY</a>              
+                    
+                    <!--
+                    <div class="navbar-left">
+                        <img src="./Static/images/cf_logo_smallest.png" class="logo-img">
+                    </div>
+                    -->
+
+                    <div class="navbar-left">
+                        <div class="navbar-brand">
+                            <div class="row">
+                                <img src="./Static/images/cf_logo_smallest.png" class="logo-img" style="margin-top:-7px;">&nbsp; FOXY
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
         
                 <div class="collapse navbar-collapse" >
 
                     <!-- search bar -->
-                    <!--
+                    
                     <form class="navbar-form navbar-center" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                        <div class="form-group" id="search_widget">
+                            <input type="text" id = "tags" class="form-control" placeholder="Search">
+
+                            <button type="submit" class="btn btn-default">Submit</button>
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
                     </form>
-                    -->
 
                     <!-- right-side buttons -->
                     <ul class="nav navbar-nav navbar-right">

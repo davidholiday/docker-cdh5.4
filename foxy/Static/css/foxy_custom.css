@@ -1,16 +1,18 @@
 
 
-
-
-
 .navbar-brand {
   font-size: 3em;
-  line-height: 0.75em;
+  line-height: .50em;
 }
 
 
 .navbar-left {
 	padding: 5px;
+}
+
+
+.navbar-right {
+  margin-right: 10px;
 }
 
 
