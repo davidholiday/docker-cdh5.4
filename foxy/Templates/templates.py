@@ -60,8 +60,8 @@ def get_page_template():
                 
                 
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse">
-                        <span class="sr-only">Toggle navigation</span>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -82,18 +82,19 @@ def get_page_template():
                     </div>
 
                 </div>
-        
+
                 <div class="collapse navbar-collapse" >
 
                     <!-- search bar -->
-                    
-                    <form class="navbar-form navbar-center" role="search">
+
+                    <form class="navbar-form navbar-center navbar-input-group" role="search">
                         <div class="form-group" id="search_widget">
                             <input type="text" id = "tags" class="form-control" placeholder="Search">
 
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default search-submit">Submit</button>
                         </div>
                     </form>
+
 
                     <!-- right-side buttons -->
                     <ul class="nav navbar-nav navbar-right">
@@ -109,7 +110,7 @@ def get_page_template():
                     </ul>
                 </div>
 
-           </div>
+            </div>
         </nav>
 
 
