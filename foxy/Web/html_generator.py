@@ -21,6 +21,7 @@ def get_page(containerInfoDict, containerPanels):
 
     # dropdown
     dropdownItems = ""
+    tags = ""
     for k, v in containerInfoDict.iteritems():
         containerName = k
         containerPanelName = containerName + "_panel"
@@ -30,6 +31,7 @@ def get_page(containerInfoDict, containerPanels):
                                                               CONTAINER_PANEL_NAME = containerPanelName)
         
         dropdownItems = dropdownItems + dropdownItemContent
+        tags = tags + """ " """ + containerName + """ ", """
 
     # content panels
     sep = "\n"
@@ -37,7 +39,8 @@ def get_page(containerInfoDict, containerPanels):
     pageTemplate = templates.get_page_template();
 
     page = pageTemplate.substitute(CONTAINER_PANELS = containerPanelString,
-                                   DROPDOWN_ITEMS = dropdownItems)
+                                   DROPDOWN_ITEMS = dropdownItems,
+                                   TAGS = tags)
     
     return page
 

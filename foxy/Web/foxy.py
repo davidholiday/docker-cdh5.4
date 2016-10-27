@@ -180,7 +180,6 @@ def filter_by_namespace(valueDict, filterValue):
 
 
 
-
 def make_foxy_files(containerInfoDict, foxyDataDict):
     serialize_inner_dict_as_json('info', containerInfoDict)
     serialize_inner_dict_as_json('foxydata', foxyDataDict)

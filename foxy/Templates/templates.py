@@ -25,29 +25,23 @@ def get_page_template():
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="/Static/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="/Static/css/bootstrap.min.css">  
         <link rel="stylesheet" href="/Static/css/jquery.json-view.min.css">
         <link rel="stylesheet" href="/Static/css/foxy_custom.css" type="text/css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>       
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
         <script src="/Static/js/jquery.json-view.min.js"></script>
+        <script src="/Static/js/bootstrap3-typeahead.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
-        <script>
+        <script type="text/javascript">
             $$( function() {
-                var availableTags = [
-                "jupyter"
-                ];
-                $$( "#tags" ).autocomplete({
-                    source: availableTags
-                });
-            } );
+                var availableTags = [$TAGS];
+                $$("#typeahead-input").typeahead({ source: availableTags});
+            });
         </script>
-
-
-
 
     </head>
 
@@ -89,8 +83,7 @@ def get_page_template():
 
                     <form class="navbar-form navbar-center navbar-input-group" role="search">
                         <div class="form-group" id="search_widget">
-                            <input type="text" id = "tags" class="form-control" placeholder="Search">
-
+                            <input type="text" class="form-control" id="typeahead-input" data-provide="typeahead" placeholder="Search">
                             <button type="submit" class="btn btn-default search-submit">Submit</button>
                         </div>
                     </form>
@@ -253,7 +246,7 @@ def get_container_port_category_table_row_template(port, containerFoxyDataDict):
     foxyPortNameKey = foxyPort + "." + constants.FOXY_PORT_NAME_KEY
 
     return string.Template("""
-<tr>
+<tr id='""" + containerFoxyDataDict[foxyPortNameKey] + """'> 
     <td>""" + containerFoxyDataDict[foxyPortNameKey] + """</td>
     <td>""" + port + """</td>
     <td>""" + containerFoxyDataDict[constants.DOCKER_PORT_KEY][port][constants.DOCKER_PORTS_HOST_IP_KEY] + 

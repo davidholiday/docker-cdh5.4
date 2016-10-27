@@ -7,29 +7,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="/Static/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="/Static/css/bootstrap.min.css">  
         <link rel="stylesheet" href="/Static/css/jquery.json-view.min.css">
         <link rel="stylesheet" href="/Static/css/foxy_custom.css" type="text/css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>       
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
         <script src="/Static/js/jquery.json-view.min.js"></script>
+        <script src="/Static/js/bootstrap3-typeahead.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
-        <script>
+        <script type="text/javascript">
             $( function() {
-                var availableTags = [
-                "jupyter"
-                ];
-                $( "#tags" ).autocomplete({
-                    source: availableTags
-                });
-            } );
+                var availableTags = [ " tx ",  " t1 ",  " roots_derriere ",  " foxy_test ",  " caochong-ambari-1 ",  " caochong-ambari-0 ", ];
+                $("#typeahead-input").typeahead({ source: availableTags});
+            });
         </script>
-
-
-
 
     </head>
 
@@ -71,8 +65,7 @@
 
                     <form class="navbar-form navbar-center navbar-input-group" role="search">
                         <div class="form-group" id="search_widget">
-                            <input type="text" id = "tags" class="form-control" placeholder="Search">
-
+                            <input type="text" class="form-control" id="typeahead-input" data-provide="typeahead" placeholder="Search">
                             <button type="submit" class="btn btn-default search-submit">Submit</button>
                         </div>
                     </form>
@@ -303,7 +296,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='Server'> 
     <td>Server</td>
     <td>8888/tcp</td>
     <td>0.0.0.0 : 32774</td>
@@ -325,7 +318,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='notebook'> 
     <td>notebook</td>
     <td>6666/tcp</td>
     <td>0.0.0.0 : 32779</td>
@@ -347,17 +340,17 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='NameNode HTTPS UI'> 
     <td>NameNode HTTPS UI</td>
     <td>50470/tcp</td>
     <td>0.0.0.0 : 32768</td>
     <td><a target="_blank" href=" http://0.0.0.0:32768 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
-<tr>
+<tr id='DataNode UI'> 
     <td>DataNode UI</td>
     <td>50075/tcp</td>
     <td>0.0.0.0 : 32769</td>
     <td><a target="_blank" href=" http://0.0.0.0:32769 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
-<tr>
+<tr id='NameNode'> 
     <td>NameNode</td>
     <td>8020/tcp</td>
     <td>0.0.0.0 : 32778</td>
@@ -379,7 +372,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='ZooKeeper Client'> 
     <td>ZooKeeper Client</td>
     <td>2181/tcp</td>
     <td>0.0.0.0 : 32781</td>
@@ -401,7 +394,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='MapReduce JobHistory UI'> 
     <td>MapReduce JobHistory UI</td>
     <td>19888/tcp</td>
     <td>0.0.0.0 : 32770</td>
@@ -423,17 +416,17 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='Node Manager Localizer'> 
     <td>Node Manager Localizer</td>
     <td>8040/tcp</td>
     <td>0.0.0.0 : 32777</td>
     <td> </td></tr>
-<tr>
+<tr id='Node Manager'> 
     <td>Node Manager</td>
     <td>8042/tcp</td>
     <td>0.0.0.0 : 32776</td>
     <td><a target="_blank" href=" http://0.0.0.0:32776 " style="text-decoration: none"> <span class="btn btn btn-success"> web</span></a> </td></tr>
-<tr>
+<tr id='Resource Manager UI'> 
     <td>Resource Manager UI</td>
     <td>8088/tcp</td>
     <td>0.0.0.0 : 32775</td>
@@ -455,17 +448,17 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='ssh'> 
     <td>ssh</td>
     <td>22/tcp</td>
     <td>0.0.0.0 : 32782</td>
     <td> </td></tr>
-<tr>
+<tr id='Dogtag Port'> 
     <td>Dogtag Port</td>
     <td>11443/tcp</td>
     <td>0.0.0.0 : 32771</td>
     <td> </td></tr>
-<tr>
+<tr id='Linux Cockpit (todo)'> 
     <td>Linux Cockpit (todo)</td>
     <td>9090/tcp</td>
     <td>0.0.0.0 : 32773</td>
@@ -487,7 +480,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='Server HTTP interface'> 
     <td>Server HTTP interface</td>
     <td>11000/tcp</td>
     <td>0.0.0.0 : 32772</td>
@@ -509,7 +502,7 @@
     </thead>
     <tbody>
         
-<tr>
+<tr id='Local Client Driver HTTP UI'> 
     <td>Local Client Driver HTTP UI</td>
     <td>4040/tcp</td>
     <td>0.0.0.0 : 32780</td>
