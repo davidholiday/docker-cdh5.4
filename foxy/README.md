@@ -82,7 +82,7 @@ LABEL \
           foxy.22.group="Other" 
 ```
    
-In docker files, the ```/``` character denotes a line-continuation and the ```#``` character denotes a commented line. Here's the breakdown of the metadata namespace:
+In docker files, the ```\``` character denotes a line-continuation and the ```#``` character denotes a commented line. Here's the breakdown of the metadata namespace:
 
 * ```foxy``` is how foxy knows what metadata to parse. This is why you're able to co-locate foxy metadata along with whatever else you might need/want to put into your container. 
 * ```name``` is the name you want to associate with this port. You can call it whatever you want.
